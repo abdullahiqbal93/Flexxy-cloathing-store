@@ -2,10 +2,11 @@
   "name": "latest",
   "version": "1.0.0",
   "main": "index.js",
+  "type":"module",
   "scripts": {
     "dev": "nodemon",
-    "start": "babel-node src/app.js",
-    "build": "babel src -d dist",
+    "start": "node dist/app.js",
+    "build": "babel src -d dist --copy-files",
     "prepare": "husky || true",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
