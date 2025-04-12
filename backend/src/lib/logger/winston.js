@@ -1,5 +1,5 @@
 import winston from "winston";
-import { getDebugLog, getErrorLog, getInfoLog, getSuccessLog, getWarnLog, levels } from "@/lib/logger/helper";
+import { getDebugLog, getErrorLog, getInfoLog, getSuccessLog, getWarnLog, levels } from "./helper.js";
 import { LEVEL, MESSAGE, SPLAT } from "triple-beam";
 
 // const maskPassword = (password) => password ? '*'.repeat(password.length) : '[HIDDEN]';

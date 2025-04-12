@@ -1,9 +1,9 @@
-import { API_PATH, SWAGGER_PATH, env } from '@/lib/config';
-import { mainLogger } from '@/lib/logger/winston';
-import { connectDB } from '@/lib/mongo/db';
-import { getServer } from '@/lib/server';
+import { API_PATH, SWAGGER_PATH, env } from './config.js';
+import { mainLogger } from './logger/winston.js';
+import { connectDB } from './mongo/db.js';
+import { getServer } from './server.js';
 import { config } from 'dotenv';
-import { initializeEmailTransporter } from '@/lib/utils/email';
+import { initializeEmailTransporter } from './utils/email.js';
 
 config();
 

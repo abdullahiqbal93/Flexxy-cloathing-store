@@ -1,6 +1,6 @@
-import { init } from "@/lib/init";
-import { mainLogger } from "@/lib/logger/winston";
-import { welcome } from "@/lib/welcome";
+import { init } from "./lib/init.js";
+import { mainLogger } from "./lib/logger/winston.js";
+import { welcome } from "./lib/welcome.js";
 
 process.on("unhandledRejection", (...reason) => {
   mainLogger.error("Unhandled Rejection at:", reason);
