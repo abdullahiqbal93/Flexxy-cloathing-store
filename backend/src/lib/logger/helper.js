@@ -1,10 +1,10 @@
 import { inspect } from "node:util";
-import { mainLogger } from "@/lib/logger/winston";
+import { mainLogger } from "@/lib/logger/winston.js";
 import { TZDate } from "@date-fns/tz";
 import chalk from "chalk";
 import { format as dateFormat } from "date-fns";
 import morgan from "morgan";
-import { isUnicodeSupported } from "@/lib/logger/unicode-support";
+import { isUnicodeSupported } from "@/lib/logger/unicode-support.js";
 
 
 export const levels = {

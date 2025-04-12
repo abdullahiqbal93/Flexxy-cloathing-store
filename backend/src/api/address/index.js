@@ -1,7 +1,7 @@
-import { createAddress, deleteAddress, getAddress, getAddressById, updateAddress } from "@/api/address/controller";
-import { insertAddressSchema, updateAddressSchema } from "@/api/address/schema/index";
-import { validateRequestBody, validateRequestParams } from "@/lib/middlewares/validate";
-import { addressByIdSchemaParams, getByIDSchemaParams, userByIdSchemaParams } from "@/lib/shared-schema/index";
+import { createAddress, deleteAddress, getAddress, getAddressById, updateAddress } from "@/api/address/controller.js";
+import { insertAddressSchema, updateAddressSchema } from "@/api/address/schema/index.js";
+import { validateRequestBody, validateRequestParams } from "@/lib/middlewares/validate.js";
+import { addressByIdSchemaParams, getByIDSchemaParams, userByIdSchemaParams } from "@/lib/shared-schema/index.js";
 
 export const address = (router) => {
     router.post(

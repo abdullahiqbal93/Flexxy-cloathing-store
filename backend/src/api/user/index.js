@@ -1,10 +1,10 @@
-import { authenticatedUser, createUser, deleteUser, getUser, getUserById, loginUser, logoutUser, updateUser, updateUserPassword, requestPasswordReset, validateResetToken, resetPassword } from "@/api/user/controller";
-import { loginSchema, updateUserSchema, userSchema, requestPasswordResetSchema, validateResetTokenSchema, resetPasswordSchema } from "@/api/user/schema/index";
-import { createdByValues, updatedByValues } from "@/lib/middlewares/default-data";
-import { userPasswordHashing, verifyUserToken } from "@/lib/middlewares/user-middleware";
-import { validateRequestBody, validateRequestParams } from "@/lib/middlewares/validate";
-import { getByIDSchemaParams } from "@/lib/shared-schema/index";
-import { insertUserSchema } from '@/api/user/schema/';
+import { authenticatedUser, createUser, deleteUser, getUser, getUserById, loginUser, logoutUser, updateUser, updateUserPassword, requestPasswordReset, validateResetToken, resetPassword } from "@/api/user/controller.js";
+import { loginSchema, updateUserSchema, userSchema, requestPasswordResetSchema, validateResetTokenSchema, resetPasswordSchema } from "@/api/user/schema/index.js";
+import { createdByValues, updatedByValues } from "@/lib/middlewares/default-data.js";
+import { userPasswordHashing, verifyUserToken } from "@/lib/middlewares/user-middleware.js";
+import { validateRequestBody, validateRequestParams } from "@/lib/middlewares/validate.js";
+import { getByIDSchemaParams } from "@/lib/shared-schema/index.js";
+import { insertUserSchema } from '@/api/user/schema/index.js';
 
 export const user = (router) => {
     router.post(

@@ -1,5 +1,5 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
-import { generateToken } from "./auth";
+import { generateToken } from "./auth.js";
 
 export const getAuthDetails = async (registry) => {
   const testToken = await generateToken({ user: 'testUser' });

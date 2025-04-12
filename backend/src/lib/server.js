@@ -1,16 +1,16 @@
-import { getApiRouter } from '@/api/';
-import { getOpenApiRouter } from "@/api/docs/open-api";
-import { API_PATH, SWAGGER_PATH } from '@/lib/config';
-import { morganMiddleware } from '@/lib/logger/morgan';
-import { mainLogger } from '@/lib/logger/winston';
-import { expressErrorHandler } from "@/lib/services/error";
+import { getApiRouter } from '@/api/index.js';
+import { getOpenApiRouter } from "@/api/docs/open-api.js";
+import { API_PATH, SWAGGER_PATH } from '@/lib/config.js';
+import { morganMiddleware } from '@/lib/logger/morgan.js';
+import { mainLogger } from '@/lib/logger/winston.js';
+import { expressErrorHandler } from "@/lib/services/error.js";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import { StatusCodes } from 'http-status-codes';
 import morgan from 'morgan';
-import { env } from '@/lib/config';
+import { env } from '@/lib/config.js';
 // import { loginRateLimiter } from './middlewares/user-middleware';
 
 

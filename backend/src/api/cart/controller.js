@@ -1,10 +1,10 @@
-import { Cart } from "@/api/cart/schema/model";
-import { Product } from "@/api/product/schema/model";
-import { logNames } from "@/lib/logger/helper";
-import { mainLogger } from "@/lib/logger/winston";
-import { createErrorResponse } from "@/lib/services/error";
-import { createSuccessResponse } from "@/lib/services/success";
-import { handleError } from "@/lib/utils/error-handle";
+import { Cart } from "@/api/cart/schema/model.js";
+import { Product } from "@/api/product/schema/model.js";
+import { logNames } from "@/lib/logger/helper.js";
+import { mainLogger } from "@/lib/logger/winston.js";
+import { createErrorResponse } from "@/lib/services/error.js";
+import { createSuccessResponse } from "@/lib/services/success.js";
+import { handleError } from "@/lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
 
 export const addToCart = async (req, res) => {  try {    const { userId, productId, quantity, size, color } = req.body;

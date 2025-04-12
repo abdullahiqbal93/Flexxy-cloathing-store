@@ -1,4 +1,4 @@
-import { searchProducts } from "@/api/search/controller";
+import { searchProducts } from "@/api/search/controller.js";
 
 export const search = (router) => {
     router.get(

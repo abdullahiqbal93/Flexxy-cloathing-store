@@ -1,4 +1,5 @@
-import { Schema, model, models } from "mongoose";
+import pkg from "mongoose";
+const { Schema, model, models } = pkg;
 
 const ReviewSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },

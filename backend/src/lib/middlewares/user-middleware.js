@@ -1,4 +1,4 @@
-import { hashUserPassword, verifyToken } from "@/lib/utils/auth";
+import { hashUserPassword, verifyToken } from "@/lib/utils/auth.js";
 import { StatusCodes } from "http-status-codes";
 import rateLimit from 'express-rate-limit';
 

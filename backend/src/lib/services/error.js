@@ -1,5 +1,5 @@
-import { APIResponse } from "@/lib/response/response";
-import { handleError } from "@/lib/utils/error-handle";
+import { APIResponse } from "@/lib/response/response.js";
+import { handleError } from "@/lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
 
 export function createErrorResponse(res, data, status = StatusCodes.INTERNAL_SERVER_ERROR, message = "Error") {

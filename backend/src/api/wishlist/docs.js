@@ -1,5 +1,5 @@
-import { wishlistSchema } from "@/api/wishlist/schema";
-import { createSuccessResponseForSwagger } from "@/lib/services/success";
+import { wishlistSchema } from "@/api/wishlist/schema.js";
+import { createSuccessResponseForSwagger } from "@/lib/services/success.js";
 import { OpenAPIRegistry, extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import * as z from "zod";
 

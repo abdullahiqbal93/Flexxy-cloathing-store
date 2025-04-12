@@ -1,4 +1,4 @@
-import { generateOpenAPIDocument } from "@/lib/open-api-generator";
+import { generateOpenAPIDocument } from "@/lib/open-api-generator.js";
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import swaggerUi from "swagger-ui-express";

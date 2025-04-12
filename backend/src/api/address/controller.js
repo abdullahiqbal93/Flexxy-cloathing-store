@@ -1,9 +1,9 @@
-import { Address } from "@/api/address/schema/model";
-import { logNames } from "@/lib/logger/helper";
-import { mainLogger } from "@/lib/logger/winston";
-import { createErrorResponse } from "@/lib/services/error";
-import { createSuccessResponse } from "@/lib/services/success";
-import { handleError } from "@/lib/utils/error-handle";
+import { Address } from "@/api/address/schema/model.js";
+import { logNames } from "@/lib/logger/helper.js";
+import { mainLogger } from "@/lib/logger/winston.js";
+import { createErrorResponse } from "@/lib/services/error.js";
+import { createSuccessResponse } from "@/lib/services/success.js";
+import { handleError } from "@/lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
 
 export const createAddress = async (req, res) => {

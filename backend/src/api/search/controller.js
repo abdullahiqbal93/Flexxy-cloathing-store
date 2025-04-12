@@ -1,4 +1,4 @@
-import { Product } from "@/api/product/schema/model";
+import { Product } from "@/api/product/schema/model.js";
 
 export const searchProducts = async (req, res) => {
     try {

@@ -1,5 +1,5 @@
-import { API_PATH } from "@/lib/config";
-import { getServer } from "@/lib/server";
+import { API_PATH } from "@/lib/config.js";
+import { getServer } from "@/lib/server.js";
 import supertest from "supertest";
 
 const app = getServer();

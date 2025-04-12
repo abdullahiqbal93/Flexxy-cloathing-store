@@ -1,6 +1,6 @@
-import { addToCart, deleteCartItem, fetchUserCartItems, updateCartItemQuantity } from "@/api/cart/controller";
-import { deleteCartSchema, insertCartSchema, updateCartSchema } from "@/api/cart/schema/index";
-import { validateRequestBody } from "@/lib/middlewares/validate";
+import { addToCart, deleteCartItem, fetchUserCartItems, updateCartItemQuantity } from "@/api/cart/controller.js";
+import { deleteCartSchema, insertCartSchema, updateCartSchema } from "@/api/cart/schema/index.js";
+import { validateRequestBody } from "@/lib/middlewares/validate.js";
 
 export const cart = (router) => {
     router.post(

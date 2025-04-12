@@ -1,7 +1,7 @@
-import { addToWishlist, removeFromWishlist, getUserWishlist } from "@/api/wishlist/controller";
-import { validateRequestBody, validateRequestParams } from "@/lib/middlewares/validate";
-import { wishlistSchema, updateWishlistSchema } from "@/api/wishlist/schema/index";
-import { userByIdSchemaParams } from "@/lib/shared-schema";
+import { addToWishlist, removeFromWishlist, getUserWishlist } from "@/api/wishlist/controller.js";
+import { validateRequestBody, validateRequestParams } from "@/lib/middlewares/validate.js";
+import { wishlistSchema, updateWishlistSchema } from "@/api/wishlist/schema/index.js";
+import { userByIdSchemaParams } from "@/lib/shared-schema/index.js";
 
 export const wishlist = (router) => {
   router.post(

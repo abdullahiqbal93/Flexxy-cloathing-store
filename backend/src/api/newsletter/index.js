@@ -1,6 +1,6 @@
-import { subscribe, unsubscribe, checkSubscription, sendNewsletter, getSubscribers } from "@/api/newsletter/controller";
-import { insertNewsletterSchema, sendNewsletterSchema } from "@/api/newsletter/schema/index";
-import { validateRequestBody } from "@/lib/middlewares/validate";
+import { subscribe, unsubscribe, checkSubscription, sendNewsletter, getSubscribers } from "@/api/newsletter/controller.js";
+import { insertNewsletterSchema, sendNewsletterSchema } from "@/api/newsletter/schema/index.js";
+import { validateRequestBody } from "@/lib/middlewares/validate.js";
 
 export const newsletter = (router) => {
   router.post(

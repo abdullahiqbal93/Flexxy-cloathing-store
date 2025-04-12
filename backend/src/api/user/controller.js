@@ -1,15 +1,15 @@
 
-import { User } from "@/api/user/schema/model";
-import { logNames } from "@/lib/logger/helper";
-import { mainLogger } from "@/lib/logger/winston";
-import { createErrorResponse } from "@/lib/services/error";
-import { createSuccessResponse } from "@/lib/services/success";
-import { handleError } from "@/lib/utils/error-handle";
+import { User } from "@/api/user/schema/model.js";
+import { logNames } from "@/lib/logger/helper.js";
+import { mainLogger } from "@/lib/logger/winston.js";
+import { createErrorResponse } from "@/lib/services/error.js";
+import { createSuccessResponse } from "@/lib/services/success.js";
+import { handleError } from "@/lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
-import { compareUserPassword, generateToken, hashUserPassword } from "@/lib/utils/auth";
-import { sendPasswordResetEmail } from '@/lib/utils/email';
+import { compareUserPassword, generateToken, hashUserPassword } from "@/lib/utils/auth.js";
+import { sendPasswordResetEmail } from '@/lib/utils/email.js';
 import crypto from 'crypto';
-import { env } from "@/lib/config";
+import { env } from "@/lib/config.js";
 
 
 export const createUser = async (req, res) => {

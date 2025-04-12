@@ -3,7 +3,7 @@ import '@/index.css'
 import App from '@/App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import store from '@/lib/store/index'
+import store from '@/lib/store/index.js'
 import { Toaster as Toast } from 'sonner';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 

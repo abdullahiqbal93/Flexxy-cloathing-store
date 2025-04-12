@@ -1,14 +1,14 @@
-import { API_PATH, SWAGGER_PATH } from "@/lib/config";
+import { API_PATH, SWAGGER_PATH } from "@/lib/config.js";
 import { OpenAPIRegistry, OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
-import { getAuthDetails } from "@/lib/utils/swagger-docs";
-import { getHeartBeatRegistry } from "@/api/status/heartbeat";
-import { getUserRegistry } from "@/api/user/docs";
-import { getProductRegistry} from "@/api/product/docs";
-import { getCartRegistry } from "@/api/cart/docs";
-import { getOrderRegistry } from "@/api/order/docs";
-import { getAddressRegistry } from "@/api/address/docs";
-import { getNewsletterRegistry } from "@/api/newsletter/docs";
-import { env } from "@/lib/config";
+import { getAuthDetails } from "@/lib/utils/swagger-doc.js";
+import { getHeartBeatRegistry } from "@/api/status/heartbeat.js";
+import { getUserRegistry } from "@/api/user/docs.js";
+import { getProductRegistry} from "@/api/product/docs.js";
+import { getCartRegistry } from "@/api/cart/docs.js";
+import { getOrderRegistry } from "@/api/order/docs.js";
+import { getAddressRegistry } from "@/api/address/docs.js";
+import { getNewsletterRegistry } from "@/api/newsletter/docs.js";
+import { env } from "@/lib/config.js";
 
 
 export const generateOpenAPIDocument = async () => {

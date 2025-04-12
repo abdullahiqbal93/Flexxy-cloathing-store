@@ -1,10 +1,11 @@
 import { env } from "@/lib/config.js";
 import { handleError } from "@/lib/utils/error-handle.js";
-import { compare, genSalt, hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { SignJWT, importPKCS8, jwtVerify } from "jose";
 import { mainLogger } from "@/lib/logger/winston.js";
 
 const algorithm = "RS256";
+const { compare, genSalt, hash } = bcrypt;
 
 export const hashUserPassword = async (password) => {
   try {

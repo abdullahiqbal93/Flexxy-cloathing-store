@@ -1,4 +1,4 @@
-import { APIResponse, ResponseSchema } from "@/lib/response/response";
+import { APIResponse, ResponseSchema } from "@/lib/response/response.js";
 import { StatusCodes } from "http-status-codes";
 import { mainLogger } from "@/lib/logger/winston.js";
 

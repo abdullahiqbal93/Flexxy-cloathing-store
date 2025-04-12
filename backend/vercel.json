@@ -1,32 +1,15 @@
 {
-    "installCommand": "npm install --legacy-peer-deps",
-    "version": 2,
-    "builds": [
-        {
-            "src": "src/app.js",
-            "use": "@vercel/node",
-            "config": {
-                "includeFiles": [".babelrc", "babel.config.js", "src/**/*", "package.json"],
-                "buildCommand": "npm run build",
-                "maxLambdaSize": "50mb",
-                "nodeVersion": "22.x"
-            }
-        }
-    ],
-    "routes": [
-        {
-            "src": "/api/v1/(.*)",
-            "dest": "src/app.js",
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-            }
-        },
-        {
-            "src": "/(.*)",
-            "dest": "src/app.js"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "dist/app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/app.js"
+    }
+  ]
 }
-
