@@ -6,9 +6,10 @@
             "src": "src/app.js",
             "use": "@vercel/node",
             "config": {
-                "includeFiles": [".babelrc", "src/**/*", "package.json"],
+                "includeFiles": [".babelrc", "babel.config.js", "src/**/*", "package.json"],
                 "buildCommand": "npm run build",
-                "maxLambdaSize": "50mb"
+                "maxLambdaSize": "50mb",
+                "nodeVersion": "18.x"
             }
         }
     ],

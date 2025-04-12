@@ -6,7 +6,7 @@ export default {
         targets: {
           node: 'current',
         },
-        modules: false,
+        modules: 'auto',
       },
     ],
   ],
@@ -18,6 +18,7 @@ export default {
         alias: {
           '@': './src',
         },
+        extensions: ['.js', '.json'],
       },
     ],
   ],
