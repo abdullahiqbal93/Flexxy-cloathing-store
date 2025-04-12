@@ -6,20 +6,24 @@
             "src": "src/app.js",
             "use": "@vercel/node",
             "config": {
-                "includeFiles": [".babelrc", "dist/.babelrc"],
-                "buildCommand": "npm run build && cp -r dist/* ."
+                "includeFiles": [".babelrc"],
+                "buildCommand": "npm run build"
             }
         }
     ],
     "routes": [
         {
-            "src": "/api/(.*)",
+            "src": "/api/v1/(.*)",
             "dest": "src/app.js",
             "headers": {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
                 "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
             }
+        },
+        {
+            "src": "/(.*)",
+            "dest": "src/app.js"
         }
     ]
 }

@@ -27,7 +27,7 @@ export const makeStore = () => {
       newsletter: newsletterReducer,
       [usersApi.reducerPath]: usersApi.reducer,
     },
-    devTools: true,
+    devTools: false,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
         usersApi.middleware,

@@ -5,6 +5,11 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from '@/lib/store/index'
 import { Toaster as Toast } from 'sonner';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
+
+if (import.meta.env.VITE_NODE_ENV === 'production') {
+    disableReactDevTools()
+}
 
 
 createRoot(document.getElementById('root')).render(
