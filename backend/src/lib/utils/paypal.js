@@ -1,5 +1,5 @@
 import paypal from 'paypal-rest-sdk';
-import { env } from '@/lib/config.js';
+import { env } from '../../lib/config.js';
 
 paypal.configure({
     mode: 'sandbox',

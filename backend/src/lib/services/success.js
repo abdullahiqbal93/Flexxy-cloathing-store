@@ -1,6 +1,6 @@
-import { APIResponse, ResponseSchema } from "@/lib/response/response.js";
+import { APIResponse, ResponseSchema } from "../response/response.js";
 import { StatusCodes } from "http-status-codes";
-import { mainLogger } from "@/lib/logger/winston.js";
+import { mainLogger } from "../logger/winston.js";
 
 function createSuccessResponseForSwagger(data) {
   return {

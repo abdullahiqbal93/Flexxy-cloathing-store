@@ -1,8 +1,8 @@
-import { env } from "@/lib/config.js";
-import { handleError } from "@/lib/utils/error-handle.js";
+import { env } from "../config.js";
+import { handleError } from "./error-handle.js";
 import bcrypt from "bcryptjs";
 import { SignJWT, importPKCS8, jwtVerify } from "jose";
-import { mainLogger } from "@/lib/logger/winston.js";
+import { mainLogger } from "../logger/winston.js";
 
 const algorithm = "RS256";
 const { compare, genSalt, hash } = bcrypt;

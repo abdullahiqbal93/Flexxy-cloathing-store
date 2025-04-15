@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { mainLogger } from "../logger/winston.js";
+import { mainLogger } from "../../lib/logger/winston.js";
 
 let cachedConnection = null;
 

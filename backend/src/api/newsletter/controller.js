@@ -1,11 +1,11 @@
-import { Newsletter } from "@/api/newsletter/schema/model.js";
-import { logNames } from "@/lib/logger/helper.js";
-import { mainLogger } from "@/lib/logger/winston.js";
-import { createErrorResponse } from "@/lib/services/error.js";
-import { createSuccessResponse } from "@/lib/services/success.js";
-import { handleError } from "@/lib/utils/error-handle.js";
+import { Newsletter } from "./schema/model.js";
+import { logNames } from "../../lib/logger/helper.js";
+import { mainLogger } from "../../lib/logger/winston.js";
+import { createErrorResponse } from "../../lib/services/error.js";
+import { createSuccessResponse } from "../../lib/services/success.js";
+import { handleError } from "../../lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
-import { sendNewsletterToAllUsers } from "@/lib/services/newsletter.js";
+import { sendNewsletterToAllUsers } from "../../lib/services/newsletter.js";
 
 export const getSubscribers = async (req, res) => {
   try {

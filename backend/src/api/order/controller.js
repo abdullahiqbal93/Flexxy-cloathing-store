@@ -1,14 +1,14 @@
-import { Order } from "@/api/order/schema/model.js";
-import { logNames } from "@/lib/logger/helper.js";
-import { mainLogger } from "@/lib/logger/winston.js";
-import { createErrorResponse } from "@/lib/services/error.js";
-import { createSuccessResponse } from "@/lib/services/success.js";
-import { handleError } from "@/lib/utils/error-handle.js";
+import { Order } from "./schema/model.js";
+import { logNames } from "../../lib/logger/helper.js";
+import { mainLogger } from "../../lib/logger/winston.js";
+import { createErrorResponse } from "../../lib/services/error.js";
+import { createSuccessResponse } from "../../lib/services/success.js";
+import { handleError } from "../../lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
-import { Product } from "@/api/product/schema/model.js";
-import { Cart } from "@/api/cart/schema/model.js";
-import paypal from "@/lib/utils/paypal.js";
-import { env } from "@/lib/config.js"
+import { Product } from "../product/schema/model.js";
+import { Cart } from "../cart/schema/model.js";
+import paypal from "../../lib/utils/paypal.js";
+import { env } from "../../lib/config.js"
 
 
 

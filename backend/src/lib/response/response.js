@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { mainLogger } from "@/lib/logger/winston.js";
+import { mainLogger } from "../logger/winston.js";
 
 export class APIResponse {
   constructor(success, message, data, statusCode) {

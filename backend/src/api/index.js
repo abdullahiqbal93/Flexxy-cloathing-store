@@ -1,12 +1,12 @@
-import { heartbeat } from "@/api/status/heartbeat.js";
-import { user } from "@/api/user/index.js";
-import { product } from "@/api/product/index.js";
-import { cart } from "@/api/cart/index.js";
-import { order } from "@/api/order/index.js";
-import { address } from "@/api/address/index.js";
-import { search } from "@/api/search/index.js";
-import { wishlist } from "@/api/wishlist/index.js";
-import { newsletter } from "@/api/newsletter/index.js";
+import { heartbeat } from "./status/heartbeat.js";
+import { user } from "./user/index.js";
+import { product } from "./product/index.js";
+import { cart } from "./cart/index.js";
+import { order } from "./order/index.js";
+import { address } from "./address/index.js";
+import { search } from "./search/index.js";
+import { wishlist } from "./wishlist/index.js";
+import { newsletter } from "./newsletter/index.js";
 
 import { Router } from "express";
 

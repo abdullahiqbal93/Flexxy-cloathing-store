@@ -1,5 +1,5 @@
-import { logNames } from "@/lib/logger/helper.js";
-import { mainLogger } from "@/lib/logger/winston.js";
+import { logNames } from "../logger/helper.js";
+import { mainLogger } from "../logger/winston.js";
 
 export class JWTError extends Error {
   constructor(message) {

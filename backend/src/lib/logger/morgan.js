@@ -1,6 +1,6 @@
 import morgan from "morgan";
-import { logFormat, streamFunc } from "@/lib/logger/helper.js";
-import { env } from "@/lib/config.js";
+import { logFormat, streamFunc } from "./helper.js";
+import { env } from "../config.js";
 
 export const morganMiddleware = morgan(logFormat, {
   stream: streamFunc(),

@@ -1,4 +1,4 @@
-import { mainLogger } from "@/lib/logger/winston.js";
+import { mainLogger } from "../../logger/winston.js";
 
 export const validatePassword = ({ password }, checkPassComplexity) => {
   const containsUppercase = (ch) => /[A-Z]/.test(ch);

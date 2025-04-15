@@ -1,6 +1,6 @@
-import { logNames } from "@/lib/logger/helper.js";
-import { mainLogger } from "@/lib/logger/winston.js";
-import { createErrorResponse } from "@/lib/services/error.js";
+import { logNames } from "../logger/helper.js";
+import { mainLogger } from "../logger/winston.js";
+import { createErrorResponse } from "../services/error.js";
 import { StatusCodes } from "http-status-codes";
 
 export const validateRequestBody = (schema) => (req, res, next) => {

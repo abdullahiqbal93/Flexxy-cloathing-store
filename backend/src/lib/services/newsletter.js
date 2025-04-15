@@ -1,7 +1,7 @@
-import { Newsletter } from '@/api/newsletter/schema/model.js';
-import { sendEmail } from '@/lib/utils/email.js';
-import { createNewsletterEmailTemplate } from '@/lib/templates/newsletter.js';
-import { mainLogger } from '@/lib/logger/winston.js';
+import { Newsletter } from '../../api/newsletter/schema/model.js';
+import { sendEmail } from '../utils/email.js';
+import { createNewsletterEmailTemplate } from '../templates/newsletter.js';
+import { mainLogger } from '../logger/winston.js';
 
 /**
  * Send newsletter to all subscribed users

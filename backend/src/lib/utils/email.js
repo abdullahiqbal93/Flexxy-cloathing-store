@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
-import { env } from '@/lib/config.js';
-import { mainLogger } from '@/lib/logger/winston.js';
+import { env } from '../config.js';
+import { mainLogger } from '../logger/winston.js';
 
 let transporter;
 

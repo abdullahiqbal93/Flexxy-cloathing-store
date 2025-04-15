@@ -1,6 +1,6 @@
 import { connect } from "mongoose";
 import { GenericContainer } from "testcontainers";
-import { mainLogger } from "@/lib/logger/winston.js";
+import { mainLogger } from "../../lib/logger/winston.js";
 
 export const getClientAndDB = async (name = "mongo") => {
   try {

@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import multer from 'multer';
-import { env } from '@/lib/config.js';
+import { env } from '../../lib/config.js';
 
 cloudinary.config({
     cloud_name: env.CLOUDINARY_CLOUD_NAME,
