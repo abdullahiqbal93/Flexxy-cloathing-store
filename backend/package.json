@@ -4,9 +4,8 @@
   "main": "index.js",
   "type":"module",
   "scripts": {
-    "dev": "nodemon",
-    "start": "node dist/app.js",
-    "build": "babel src -d dist --copy-files",
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js",
     "prepare": "husky || true",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -17,11 +16,7 @@
   "description": "",
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.3.0",
-    "@babel/core": "^7.26.7",
-    "@babel/node": "^7.26.0",
-    "@babel/preset-env": "^7.26.7",
-    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
-    "babel-plugin-module-resolver": "^5.0.2",
+
     "@date-fns/tz": "^1.2.0",
     "bcryptjs": "^2.4.3",
     "chalk": "^5.4.1",
@@ -47,7 +42,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.27.0",
+
     "@faker-js/faker": "^9.4.0",
     "eslint": "^9.19.0",
     "husky": "^9.1.7",
