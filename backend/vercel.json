@@ -2,10 +2,10 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/app.js",
+      "src": "src/app.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["dist/**"],
+        "includeFiles": ["src/**"],
         "nodeVersion": "18.x"
       }
     }
@@ -13,14 +13,19 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/dist/app.js"
+      "dest": "/src/app.js"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/src/app.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/app.js"
+      "dest": "/src/app.js"
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "VERCEL": "1"
   }
 }
