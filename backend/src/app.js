@@ -22,7 +22,7 @@ const initializeServices = async () => {
     return false;
   } catch (error) {
     mainLogger.error("Service initialization error:", error);
-    return false;
+    throw error; // Propagate the error for better handling
   }
 };
 
@@ -34,11 +34,27 @@ const app = getServer();
 
 // Add error handling middleware for serverless environment
 app.use((err, req, res, next) => {
-  mainLogger.error('Serverless error:', err);
-  res.status(500).json({
+  mainLogger.error('Serverless error:', {
+    message: err.message,
+    stack: err.stack,
+    path: req.path,
+    method: req.method
+  });
+  
+  // Handle MongoDB connection errors specifically
+  if (err.name === 'MongoError' || err.name === 'MongooseError') {
+    return res.status(500).json({
+      success: false,
+      message: 'Database connection error',
+      error: process.env.NODE_ENV === 'development' ? err.message : 'Please try again later'
+    });
+  }
+
+  // Handle other errors
+  res.status(err.status || 500).json({
     success: false,
-    message: 'Internal server error',
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    message: err.message || 'Internal server error',
+    error: process.env.NODE_ENV === 'development' ? err.stack : undefined
   });
 });
 
