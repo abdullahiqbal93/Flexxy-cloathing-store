@@ -4,7 +4,7 @@
       "targets": {
         "node": "current"
       },
-      "modules": false
+      "modules": "auto"
     }]
   ],
   "plugins": [
@@ -13,8 +13,9 @@
       "alias": {
         "@": "./src"
       },
-      "extensions": [".js", ".json"]
-    }]
+      "extensions": [".js", ".json", ".mjs"]
+    }],
+    ["@babel/plugin-transform-modules-commonjs"]
   ]
 }
   
