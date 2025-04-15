@@ -8,7 +8,7 @@ export const env = {
   PORT: process.env.PORT,
   CLIENT_BASE_URL: process.env.CLIENT_BASE_URL,
   API_BASE_URL: process.env.API_BASE_URL,
-  DB_URL: process.env.MONGO_URI,
+  DB_URI: process.env.MONGO_URI,
   SALT_FACTOR: 10,
   PRIVATE_KEY_PATH: process.env.PRIVATE_KEY_PATH,
   PRIVATE_KEY: process.env.PRIVATE_KEY,

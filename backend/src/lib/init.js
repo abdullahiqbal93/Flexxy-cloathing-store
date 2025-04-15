@@ -11,7 +11,7 @@ export const init = async () => {
   return new Promise((resolve, reject) => {
     (async () => {
       try {
-        const db = await connectDB(env.DB_URL);
+        const db = await connectDB(env.DB_URI);
 
         if (db) {
           await initializeEmailTransporter();
