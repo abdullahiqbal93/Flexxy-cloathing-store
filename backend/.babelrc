@@ -4,7 +4,7 @@
       "targets": {
         "node": "current"
       },
-      "modules": "auto"
+      "modules": false
     }]
   ],
   "plugins": [
@@ -12,7 +12,8 @@
       "root": ["./src"],
       "alias": {
         "@": "./src"
-      }
+      },
+      "extensions": [".js", ".json"]
     }]
   ]
 }
