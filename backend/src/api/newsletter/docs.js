@@ -1,5 +1,5 @@
-import { newsletterSchema, insertNewsletterSchema } from "@/api/newsletter/schema/index.js";
-import { createSuccessResponseForSwagger } from "@/lib/services/success.js";
+import { newsletterSchema, insertNewsletterSchema } from "./schema/index.js";
+import { createSuccessResponseForSwagger } from "../../lib/services/success.js";
 import { OpenAPIRegistry, extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import * as z from "zod";
 

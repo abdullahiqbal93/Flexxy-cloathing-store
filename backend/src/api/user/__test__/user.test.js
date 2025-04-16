@@ -1,8 +1,8 @@
 import { beforeAll, afterAll, describe, it, expect } from "node:test";
-import { API_PATH } from "@/lib/config";
-import { getServer } from "@/lib/server";
-import { getClientAndDB } from "@/lib/test-setup/test-db";
-import { clearAllUsers, genFakeUsers, insertAllUsers } from "@/mock/users";
+import { API_PATH } from "../../../lib/config.js";
+import { getServer } from "../../../lib/server.js";
+import { getClientAndDB } from "../../../lib/test-setup/test-db.js";
+import { clearAllUsers, genFakeUsers, insertAllUsers } from "../../../mock/users.js";
 import supertest from "supertest";
 
 jest.setTimeout(150000);

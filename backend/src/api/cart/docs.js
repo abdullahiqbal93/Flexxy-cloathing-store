@@ -1,6 +1,6 @@
-import { cartSchema, updateCartSchema, insertCartSchema } from "@/api/cart/schema/index.js";
-import { createSuccessResponseForSwagger } from "@/lib/services/success.js";
-import { getAuthDetails } from "@/lib/utils/swagger-doc.js";
+import { cartSchema, updateCartSchema, insertCartSchema } from "./schema/index.js";
+import { createSuccessResponseForSwagger } from "../../lib/services/success.js";
+import { getAuthDetails } from "../../lib/utils/swagger-doc.js";
 import { OpenAPIRegistry, extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import * as z from "zod";
 
