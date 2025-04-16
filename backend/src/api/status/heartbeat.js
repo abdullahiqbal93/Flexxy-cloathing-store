@@ -1,4 +1,4 @@
-import { createSuccessResponse, createSuccessResponseForSwagger } from "../../lib/services/success";
+import { createSuccessResponse, createSuccessResponseForSwagger } from "../../lib/response/response.js";
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
