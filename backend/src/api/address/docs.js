@@ -1,6 +1,6 @@
-import { addressSchema, updateAddressSchema, insertAddressSchema } from "@/api/address/schema/index.js";
-import { createSuccessResponseForSwagger } from "@/lib/services/success.js";
-import { getAuthDetails } from "@/lib/utils/swagger-doc.js";
+import { addressSchema, updateAddressSchema, insertAddressSchema } from "./schema/index.js";
+import { createSuccessResponseForSwagger } from "../../lib/services/success.js";
+import { getAuthDetails } from "../../lib/utils/swagger-doc.js";
 import { OpenAPIRegistry, extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import * as z from "zod";
 

@@ -1,7 +1,7 @@
 
 import pkg from "mongoose";
 const { Schema, model, models } = pkg;
-import { roles } from "@/api/user/schema/index.js";
+import { roles } from "./index.js";
 
 export const UserSchema = new Schema(
     {

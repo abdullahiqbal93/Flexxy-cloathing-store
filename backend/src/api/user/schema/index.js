@@ -1,4 +1,4 @@
-import { validatePassword } from "@/lib/utils/password.js";
+import { validatePassword } from "../../../lib/utils/password.js";
 import * as z from "zod";
 
 const { object, string, boolean } = z;
