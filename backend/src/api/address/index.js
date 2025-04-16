@@ -1,4 +1,4 @@
-import { createAddress, deleteAddress, getAddress, getAddressById, updateAddress } from "./controller.js";
+import { createAddress, deleteAddress, getAddress, getAddressById, updateAddress } from "./index.js";
 import { insertAddressSchema, updateAddressSchema } from "./schema/index.js";
 import { validateRequestBody, validateRequestParams } from "../../lib/middlewares/validate.js";
 import { addressByIdSchemaParams, getByIDSchemaParams, userByIdSchemaParams } from "../../lib/shared-schema/index.js";
