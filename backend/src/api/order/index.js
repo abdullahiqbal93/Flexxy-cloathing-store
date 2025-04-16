@@ -1,7 +1,7 @@
-import { addOrder, cancelOrder, capturePayment, createOrder, deleteOrder, deleteOrderForAdmin, deleteOrderForUser, getOrder, getOrderById, updateOrder } from "@/api/order/controller.js";
-import { insertOrderSchema, updateOrderSchema } from "@/api/order/schema/index.js";
-import { validateRequestBody, validateRequestParams } from "@/lib/middlewares/validate.js";
-import { getByIDSchemaParams } from "@/lib/shared-schema/index.js";
+import { addOrder, cancelOrder, capturePayment, createOrder, deleteOrder, deleteOrderForAdmin, deleteOrderForUser, getOrder, getOrderById, updateOrder } from "./controller.js";
+import { insertOrderSchema, updateOrderSchema } from "./schema/index.js";
+import { validateRequestBody, validateRequestParams } from "../../lib/middlewares/validate.js";
+import { getByIDSchemaParams } from "../../lib/shared-schema/index.js";
 
 export const order = (router) => {
     router.post(

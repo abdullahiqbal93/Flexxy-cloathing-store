@@ -1,7 +1,7 @@
-import { addReview, createProduct, deleteProduct, deleteReview, getBrands, getFilteredProducts, getProduct, getProductById, handleImageUpload, updateProduct, updateReview } from "@/api/product/controller.js";
-import { insertProductSchema, updateProductSchema } from "@/api/product/schema/index.js";
-import { validateRequestBody, validateRequestParams } from "@/lib/middlewares/validate.js";
-import { getByIDSchemaParams } from "@/lib/shared-schema/index.js";
+import { addReview, createProduct, deleteProduct, deleteReview, getBrands, getFilteredProducts, getProduct, getProductById, handleImageUpload, updateProduct, updateReview } from "./controller.js";
+import { insertProductSchema, updateProductSchema } from "./schema/index.js";
+import { validateRequestBody, validateRequestParams } from "../../lib/middlewares/validate.js";
+import { getByIDSchemaParams } from "../../lib/shared-schema/index.js";
 import multer from "multer";
 
 const upload = multer();

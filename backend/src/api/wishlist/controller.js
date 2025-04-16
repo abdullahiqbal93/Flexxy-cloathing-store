@@ -1,8 +1,8 @@
-import { Wishlist } from "@/api/wishlist/schema/model.js";
-import { Product } from "@/api/product/schema/model.js";
-import { createSuccessResponse } from "@/lib/services/success.js";
-import { createErrorResponse } from "@/lib/services/error.js";
-import { handleError } from "@/lib/utils/error-handle.js";
+import { Wishlist } from "./schema/model.js";
+import { Product } from "../product/schema/model.js";
+import { createSuccessResponse } from "../../lib/services/success.js";
+import { createErrorResponse } from "../../lib/services/error.js";
+import { handleError } from "../../lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
 
 export const addToWishlist = async (req, res) => {

@@ -1,12 +1,12 @@
-import { Product } from "@/api/product/schema/model.js";
-import { Order } from "@/api/order/schema/model.js";
-import { logNames } from "@/lib/logger/helper.js";
-import { mainLogger } from "@/lib/logger/winston.js";
-import { createErrorResponse } from "@/lib/services/error.js";
-import { createSuccessResponse } from "@/lib/services/success.js";
-import { handleError } from "@/lib/utils/error-handle.js";
+import { Product } from "./schema/model.js";
+import { Order } from "../order/schema/model.js";
+import { logNames } from "../../lib/logger/helper.js";
+import { mainLogger } from "../../lib/logger/winston.js";
+import { createErrorResponse } from "../../lib/services/error.js";
+import { createSuccessResponse } from "../../lib/services/success.js";
+import { handleError } from "../../lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
-import { imageUploadUtil } from "@/lib/utils/cloudinary.js";
+import { imageUploadUtil } from "../../lib/utils/cloudinary.js";
 
 export const createProduct = async (req, res) => {
   try {
