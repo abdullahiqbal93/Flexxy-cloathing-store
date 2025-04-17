@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosInstance from "@/lib/axios";
+import axios from "axios";
 
 export const initialState = {
   user: null,
@@ -12,7 +12,13 @@ export const registerUser = createAsyncThunk(
 
   async (formData) => {
     try {
-      const response = await axiosInstance.post('/api/v1/user', formData);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user`,
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
 
       return response.data;
     } catch (error) {
@@ -25,7 +31,9 @@ export const registerUser = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
   async (id) => {
-    const result = await axiosInstance.get(`/api/v1/user/${id}`);
+    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
+      withCredentials: true,
+    });
     return result?.data;
   }
 );
@@ -34,14 +42,30 @@ export const fetchUserById = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "/auth/login",
-
-  async (formData) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('/api/v1/login', formData);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/login`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+      );
+
+      if (response.data.success) {
+        // Ensure cookie is set with proper attributes
+        const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
+        if (!token) {
+          document.cookie = `authToken=${response.data.token}; path=/; secure; SameSite=Strict; max-age=86400`;
+        }
+      }
 
       return response.data;
     } catch (error) {
-      return error.response?.data || { message: "Something went wrong" };
+      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
     }
   }
 );
@@ -49,7 +73,13 @@ export const loginUser = createAsyncThunk(
 export const editUser = createAsyncThunk(
   "/user/editUser",
   async ({ id, formData }) => {
-    const result = await axiosInstance.put(`/api/v1/user/${id}`, formData);
+    const result = await axios.put(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
 
     return result?.data;
   }
@@ -59,15 +89,32 @@ export const editUser = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk(
   "/auth/checkAuth",
-
-  async () => {
-    const response = await axiosInstance.get('/api/v1/check-auth', {
-      headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
+      if (!token) {
+        return rejectWithValue({ success: false, message: 'No auth token found' });
       }
-    });
 
-    return response.data;
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/check-auth`,
+        {
+          withCredentials: true,
+          headers: {
+            'Authorization': `Bearer ${token.split('=')[1]}`,
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          }
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=Strict';
+      return rejectWithValue({ 
+        success: false, 
+        message: error.response?.data?.message || 'Authentication failed'
+      });
+    }
   }
 );
 
@@ -75,7 +122,12 @@ export const logoutUser = createAsyncThunk(
   "/auth/logout",
 
   async () => {
-    const response = await axiosInstance.post('/api/v1/logout', {});
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/logout`, {},
+      {
+        withCredentials: true,
+      }
+    );
 
     return response.data;
   }

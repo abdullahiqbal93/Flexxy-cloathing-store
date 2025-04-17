@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getJWTToken } from "./axios";
+import { getAxios, getJWTToken } from "./axios";
 
 const getRequestConfig = (args) => {
   if (typeof args === "string") {
@@ -8,22 +8,16 @@ const getRequestConfig = (args) => {
   return args;
 };
 
-const _axios = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
-  withCredentials: true,
-});
+const _axios = getAxios();
 
 const axiosBaseQuery = ({ transformResponse } = {}) => {
   return async (args, api, extraOptions) => {
     try {
       const requestConfig = getRequestConfig(args);
 
-      const tokenValue = getJWTToken(); 
-
       const result = await _axios({
         ...requestConfig,
         headers: {
-          Authorization: tokenValue ? `Bearer ${tokenValue}` : "",
           ...requestConfig.headers,
         },
         signal: api.signal,
