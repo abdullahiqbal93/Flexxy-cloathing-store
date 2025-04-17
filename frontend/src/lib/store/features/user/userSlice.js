@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "@/lib/axios";
 
 export const initialState = {
   user: null,
@@ -12,13 +12,7 @@ export const registerUser = createAsyncThunk(
 
   async (formData) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axiosInstance.post('/api/v1/user', formData);
 
       return response.data;
     } catch (error) {
@@ -31,9 +25,7 @@ export const registerUser = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
   async (id) => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
-      withCredentials: true,
-    });
+    const result = await axiosInstance.get(`/api/v1/user/${id}`);
     return result?.data;
   }
 );
@@ -45,13 +37,7 @@ export const loginUser = createAsyncThunk(
 
   async (formData) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/login`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axiosInstance.post('/api/v1/login', formData);
 
       return response.data;
     } catch (error) {
@@ -63,13 +49,7 @@ export const loginUser = createAsyncThunk(
 export const editUser = createAsyncThunk(
   "/user/editUser",
   async ({ id, formData }) => {
-    const result = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`,
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
+    const result = await axiosInstance.put(`/api/v1/user/${id}`, formData);
 
     return result?.data;
   }
@@ -81,15 +61,11 @@ export const checkAuth = createAsyncThunk(
   "/auth/checkAuth",
 
   async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/check-auth`,
-      {
-        withCredentials: true,
-        headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-        }
+    const response = await axiosInstance.get('/api/v1/check-auth', {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
       }
-    );
+    });
 
     return response.data;
   }
@@ -99,12 +75,7 @@ export const logoutUser = createAsyncThunk(
   "/auth/logout",
 
   async () => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/logout`, {},
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axiosInstance.post('/api/v1/logout', {});
 
     return response.data;
   }

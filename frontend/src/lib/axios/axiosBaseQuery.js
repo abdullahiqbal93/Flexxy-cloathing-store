@@ -18,12 +18,7 @@ const axiosBaseQuery = ({ transformResponse } = {}) => {
     try {
       const requestConfig = getRequestConfig(args);
 
-      const tokenValue = getJWTToken();
-      
-      // For protected routes, ensure token exists
-      if (requestConfig.requiresAuth && !tokenValue) {
-        throw new Error('Authentication required');
-      }
+      const tokenValue = getJWTToken(); 
 
       const result = await _axios({
         ...requestConfig,
