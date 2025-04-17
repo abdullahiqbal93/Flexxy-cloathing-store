@@ -113,9 +113,10 @@ export const loginUser = async (req, res) => {
     res.cookie('authToken', token, {
       httpOnly: true,
       secure: env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000,    
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000,
     });
+    
 
     return createSuccessResponse(res, { id: existingUser._id, name: existingUser.name, role: existingUser.role, phoneNumber: existingUser.phoneNumber, email: existingUser.email, token: token }, StatusCodes.OK, "Login successful");
   } catch (e) {
