@@ -28,6 +28,7 @@ import NotFound from '@/pages/client/not-found.jsx';
 import PaymentFailedPage from '@/pages/client/payment-failed.jsx';
 import NewsletterManagement from './pages/admin/newsletter.jsx';
 import ScrollToTop from '@/components/scrollToTop.js';
+import { fetchWishlist } from '@/lib/store/features/wishlist/wishlistSlice';
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector((state) => state.user);
@@ -43,6 +44,11 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [dispatch]);
 
+  useEffect(() => {
+    if (isAuthenticated && user?.id) {
+      dispatch(fetchWishlist(user.id));
+    }
+  }, [dispatch, isAuthenticated, user?.id]);
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
