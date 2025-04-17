@@ -2,7 +2,7 @@ import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { capturePayment } from '@/lib/store/features/order/orderSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
@@ -10,6 +10,7 @@ import { Loader2 } from 'lucide-react';
 function PaypalReturnPage() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const paymentId = params.get('paymentId');
   const payerId = params.get('PayerID');
@@ -21,15 +22,15 @@ function PaypalReturnPage() {
         dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
           if (data?.payload?.success) {
             sessionStorage.removeItem("currentOrderId");
-            window.location.href = '/shop/payment-success';
+            navigate('/shop/payment-success');
           } else {
             toast.error('Payment capture failed. Please contact support.');
-            window.location.href = '/shop/payment-failed';
+            navigate('/shop/payment-failed');
           }
         });
       } else {
         toast.error('Order information not found');
-        window.location.href = '/shop/payment-failed';
+        navigate('/shop/payment-failed');
       }
     }
   }, [paymentId, payerId, dispatch]);

@@ -82,7 +82,7 @@ export const logoutUser = async (req, res) => {
     res.clearCookie('authToken', {
       httpOnly: true,
       secure: env.NODE_ENV === 'production',
-      sameSite: 'strict'
+      sameSite: 'none'
     });
     return createSuccessResponse(res, null, StatusCodes.OK, "Logout successful");
   } catch (e) {
