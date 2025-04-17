@@ -11,14 +11,14 @@ const initialState = {
 
 export const createNewOrder = createAsyncThunk('/order/createNewOrder',
   async (orderData) => {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/add-order`, orderData);
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/add-order`, orderData);
     return response.data;
   }
 );
 
 export const capturePayment = createAsyncThunk('/order/capturePayment',
   async ({ paymentId, payerId, orderId }) => {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/order/capture`, { paymentId, payerId, orderId });
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/capture`, { paymentId, payerId, orderId });
     return response.data;
   }
 );
@@ -26,7 +26,7 @@ export const capturePayment = createAsyncThunk('/order/capturePayment',
 export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
   async (userId) => {
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/order?userId=${userId}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order?userId=${userId}`);
     return response.data.data.filter(order => !order.deletedFor?.user);
   }
 );
@@ -34,7 +34,7 @@ export const getAllOrdersByUserId = createAsyncThunk(
 export const getOrderDetails = createAsyncThunk(
   "/order/getOrderDetails",
   async (id) => {
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/order/${id}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/${id}`);
     return response.data;
   }
 );
@@ -42,7 +42,7 @@ export const getOrderDetails = createAsyncThunk(
 export const cancelOrder = createAsyncThunk(
   '/order/cancelOrder',
   async (id) => {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/order/cancel/${id}`);
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/cancel/${id}`);
     return response.data;
   }
 );
@@ -50,7 +50,7 @@ export const cancelOrder = createAsyncThunk(
 export const deleteOrderForUser = createAsyncThunk(
   '/order/deleteOrderForUser',
   async (id) => {
-    const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/order/delete/${id}`);
+    const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/delete/${id}`);
     return response.data;
   }
 );

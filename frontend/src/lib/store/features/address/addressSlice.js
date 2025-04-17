@@ -9,7 +9,7 @@ const initialState = {
 export const addNewAddress = createAsyncThunk("/addresses/addNewAddress",
     async (formData) => {
         const response = await axios.post(
-            `${import.meta.env.VITE_API_BASE_URL}/address`,
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/address`,
             formData
         );
 
@@ -20,7 +20,7 @@ export const addNewAddress = createAsyncThunk("/addresses/addNewAddress",
 export const fetchAllUserAddresses = createAsyncThunk("/addresses/fetchAllUserAddresses",
     async (userId) => {
         const response = await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/address?userId=${userId}`
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/address?userId=${userId}`
         );
 
         return response.data;
@@ -30,7 +30,7 @@ export const fetchAllUserAddresses = createAsyncThunk("/addresses/fetchAllUserAd
 export const editAddress = createAsyncThunk("/addresses/editAddress",
     async ({ userId, addressId, formData }) => {
         const response = await axios.put(
-            `${import.meta.env.VITE_API_BASE_URL}/address/${userId}/${addressId}`,
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/address/${userId}/${addressId}`,
             formData
         );
 
@@ -41,7 +41,7 @@ export const editAddress = createAsyncThunk("/addresses/editAddress",
 export const deleteAddress = createAsyncThunk("/addresses/deleteAddress",
     async ({ userId, addressId }) => {
         const response = await axios.delete(
-            `${import.meta.env.VITE_API_BASE_URL}/address/${userId}/${addressId}`
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/address/${userId}/${addressId}`
         );
 
         return response.data;

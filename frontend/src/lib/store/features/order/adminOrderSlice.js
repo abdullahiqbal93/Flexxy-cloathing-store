@@ -10,14 +10,14 @@ const initialState = {
 export const getAllOrdersForAdmin = createAsyncThunk(
   "/order/getAllOrdersForAdmin",
   async () => {
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/order`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order`);
     const orders = response.data.data;
 
     const ordersWithUsers = await Promise.all(
       orders.map(async (order) => {
         try {
           const userResponse = await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/user/${order.userId}`,
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${order.userId}`,
             { withCredentials: true }
           );
           return {
@@ -40,7 +40,7 @@ export const getAllOrdersForAdmin = createAsyncThunk(
 export const getOrderDetailsForAdmin = createAsyncThunk(
   "/order/getOrderDetailsForAdmin",
   async (id) => {
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/order/${id}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/${id}`);
     return response.data;
   }
 );
@@ -48,7 +48,7 @@ export const getOrderDetailsForAdmin = createAsyncThunk(
 export const deleteOrder = createAsyncThunk(
   "/order/deleteOrder",
   async (id) => {
-    const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/order/${id}`);
+    const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/${id}`);
     return response.data;
   }
 );
@@ -57,7 +57,7 @@ export const updateOrderStatus = createAsyncThunk(
   "/order/updateOrderStatus",
   async ({ id, orderStatus }) => {
     const response = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/order/${id}`,
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/order/${id}`,
       { orderStatus }
     );
     return response.data;
@@ -67,7 +67,7 @@ export const updateOrderStatus = createAsyncThunk(
 export const deleteOrderForAdmin = createAsyncThunk(
   '/order/deleteOrderForAdmin',
   async (id) => {
-    const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/order/admin-delete/${id}`);
+    const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/admin-delete/${id}`);
     return response.data;
   }
 );

@@ -13,7 +13,7 @@ export const fetchSubscribers = createAsyncThunk(
   'newsletter/fetchSubscribers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/newsletter/subscribers`);
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/newsletter/subscribers`);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch subscribers');
@@ -25,7 +25,7 @@ export const subscribeEmail = createAsyncThunk(
   'newsletter/subscribe',
   async ({ email }, { rejectWithValue }) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/newsletter/subscribe`, { email });
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/newsletter/subscribe`, { email });
       toast.success('Successfully subscribed to newsletter!');
       return email;
     } catch (error) {
@@ -38,7 +38,7 @@ export const unsubscribeNewsletter = createAsyncThunk(
   'newsletter/unsubscribe',
   async (email, { rejectWithValue, dispatch }) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/newsletter/unsubscribe`, { email });
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/newsletter/unsubscribe`, { email });
       toast.success('Successfully unsubscribed');
       dispatch(fetchSubscribers());
       return email;
@@ -53,7 +53,7 @@ export const sendNewsletter = createAsyncThunk(
   async ({ subject, content }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/newsletter/send`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/newsletter/send`,
         { subject, content }
       );
       toast.success('Newsletter sent successfully!');

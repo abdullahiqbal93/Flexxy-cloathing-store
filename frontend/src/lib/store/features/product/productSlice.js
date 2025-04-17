@@ -15,7 +15,7 @@ export const addNewProduct = createAsyncThunk(
   "/product/addnewproduct",
   async (formData) => {
     const result = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/product`,
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product`,
       formData
     );
     return result?.data;
@@ -26,7 +26,7 @@ export const fetchAllProducts = createAsyncThunk(
   "/product/fetchAllProducts",
   async () => {
     const result = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/product`
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product`
     );
 
     return result?.data;
@@ -37,7 +37,7 @@ export const fetchProductById = createAsyncThunk(
   "/product/fetchProductById",
   async (productId) => {
     const result = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/product/${productId}`
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${productId}`
     );
 
     return result?.data;
@@ -48,7 +48,7 @@ export const editProduct = createAsyncThunk(
   "/product/editProduct",
   async ({ id, formData }) => {
     const result = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/product/${id}`,
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${id}`,
       formData,
     );
 
@@ -60,7 +60,7 @@ export const deleteProduct = createAsyncThunk(
   "/product/deleteProduct",
   async (id) => {
     const result = await axios.delete(
-      `${import.meta.env.VITE_API_BASE_URL}/product/${id}`
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${id}`
     );
 
     return result?.data;
@@ -105,7 +105,7 @@ export const addReview = createAsyncThunk(
   async ({ productId, formdata }) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/product/${productId}/review`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${productId}/review`,
         formdata,
         { withCredentials: true }
       );
@@ -121,7 +121,7 @@ export const updateReview = createAsyncThunk(
   async ({ productId, reviewId, formdata }) => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/product/${productId}/review/${reviewId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${productId}/review/${reviewId}`,
         formdata,
         { withCredentials: true }
       );
@@ -137,7 +137,7 @@ export const deleteReview = createAsyncThunk(
   async ({ productId, reviewId, userId }) => {
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/product/${productId}/review/${reviewId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${productId}/review/${reviewId}`,
         { 
           data: { userId },
           withCredentials: true 

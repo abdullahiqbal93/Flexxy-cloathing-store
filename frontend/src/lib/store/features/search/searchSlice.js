@@ -8,7 +8,7 @@ const initialState = {
 
 export const getSearchResults = createAsyncThunk("/product/getSearchResults",
     async (keyword) => {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/search/${keyword}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/search/${keyword}`);
 
         return response.data;
     }

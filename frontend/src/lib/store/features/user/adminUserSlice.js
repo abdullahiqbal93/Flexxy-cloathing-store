@@ -9,7 +9,7 @@ export const initialState = {
 export const fetchAllUsers = createAsyncThunk(
   "/user/fetchAllUsers",
   async () => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user`, {
+    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user`, {
       withCredentials: true,
     });
 
@@ -23,7 +23,7 @@ export const registerUser = createAsyncThunk(
   async (formData) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/user`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user`,
         formData,
         {
           withCredentials: true,
@@ -40,7 +40,7 @@ export const registerUser = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
   async (id) => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/${id}`, {
+    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
       withCredentials: true,
     });
     return result?.data;
@@ -51,7 +51,7 @@ export const editUser = createAsyncThunk(
   "/user/editUser",
   async ({ id, formData }) => {
     const result = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/user/${id}`,
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`,
       formData,
       {
         withCredentials: true,
@@ -63,7 +63,7 @@ export const editUser = createAsyncThunk(
 );
 
 export const deleteUser = createAsyncThunk("/user/deleteUser", async (id) => {
-  const result = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/user/${id}`, {
+  const result = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
     withCredentials: true,
   });
 
@@ -75,7 +75,7 @@ export const changeUserPassword = createAsyncThunk(
   async ({ currentPassword, newPassword }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/user/change-password`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/change-password`,
         { currentPassword, newPassword },
         { withCredentials: true }
       );

@@ -8,22 +8,22 @@ const initialState = {
 };
 
 export const addToCart = createAsyncThunk("cart/addToCart", async ({ userId, productId, quantity, size, color }) => {
-  const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/cart`, { userId, productId, quantity, size, color });
+  const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart`, { userId, productId, quantity, size, color });
   return response.data;
 });
 
 export const fetchUserCartItems = createAsyncThunk("cart/fetchUserCartItems", async (userId) => {
-  const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/cart/${userId}`);
+  const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart/${userId}`);
   return response.data;
 });
 
 export const updateCartItemQuantity = createAsyncThunk("cart/updateCartItemQuantity", async ({ userId, productId, size, color, quantity }) => {
-  const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/cart`, { userId, productId, size, color, quantity });
+  const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart`, { userId, productId, size, color, quantity });
   return response.data;
 });
 
 export const deleteCartItem = createAsyncThunk("cart/deleteCartItem", async ({ userId, productId, size, color }) => {
-  const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
+  const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart`, {
     data: { userId, productId, size, color },
   });
   return response.data;
