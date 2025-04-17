@@ -6,7 +6,7 @@
       "use": "@vercel/node",
       "config": {
         "includeFiles": ["src/**"],
-        "nodeVersion": "22.x"
+        "nodeVersion": "18.x"
       }
     }
   ],
@@ -16,8 +16,7 @@
       "dest": "/src/app.js"
     },
     {
-      "src": "/favicon.ico",
-      "dest": "/src/app.js"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
