@@ -128,7 +128,8 @@ export const logoutUser = createAsyncThunk(
         withCredentials: true,
       }
     );
-
+    // Remove authToken cookie on client side
+    document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=Strict';
     return response.data;
   }
 );
