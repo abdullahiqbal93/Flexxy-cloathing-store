@@ -55,14 +55,6 @@ export const loginUser = createAsyncThunk(
         }
       );
 
-      if (response.data.success) {
-        // Ensure cookie is set with proper attributes
-        const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-        if (!token) {
-          document.cookie = `authToken=${response.data.token}; path=/; secure; SameSite=Strict; max-age=86400`;
-        }
-      }
-
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong" });
