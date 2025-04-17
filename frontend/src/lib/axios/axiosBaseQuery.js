@@ -9,7 +9,7 @@ const getRequestConfig = (args) => {
 };
 
 const _axios = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
 });
 
 const axiosBaseQuery = ({ transformResponse } = {}) => {

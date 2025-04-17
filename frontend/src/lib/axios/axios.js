@@ -8,7 +8,7 @@ export function getJWTToken() {
 export const getAxios = (token) => {
   return () => {
     return axios.create({
-      baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+      baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
