@@ -75,7 +75,7 @@ export const fetchAllFilteredProducts = createAsyncThunk("/product/fetchAllFilte
   });
 
   const result = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/filtered-products?${query}`
+    `${import.meta.env.VITE_API_BASE_URL}/api/v1/filtered-products?${query}`
   );
 
   return result?.data;
@@ -93,7 +93,7 @@ export const fetchProductDetails = createAsyncThunk("/product/fetchProductDetail
 
 export const fetchAllBrands = createAsyncThunk("/product/fetchBrands", async () => {
   const result = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/product/brand`
+    `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/brand`
   );
 
   return result?.data;
