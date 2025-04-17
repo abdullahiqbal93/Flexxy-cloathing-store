@@ -27,7 +27,7 @@ import PaypalCancelPage from '@/pages/client/paypal-cancel.jsx';
 import NotFound from '@/pages/client/not-found.jsx';
 import PaymentFailedPage from '@/pages/client/payment-failed.jsx';
 import NewsletterManagement from './pages/admin/newsletter.jsx';
-import ScrollToTop from '@/components/scrollToTop.jsx';
+import ScrollToTop from '@/components/scrollToTop.js';
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector((state) => state.user);
