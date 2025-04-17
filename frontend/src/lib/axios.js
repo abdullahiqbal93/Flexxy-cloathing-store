@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { store } from './store';
+import store from './store/index';
 import { invalidateUser } from './store/features/user/userSlice';
 
 // Create axios instance with default config
