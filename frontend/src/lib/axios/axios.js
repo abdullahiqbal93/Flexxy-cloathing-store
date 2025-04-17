@@ -10,7 +10,6 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Add request interceptor to add token to all requests
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = getJWTToken();
@@ -24,13 +23,11 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Add response interceptor to handle token expiration
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Clear token on unauthorized response
-      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=Strict';
+      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=None';
       window.location.href = '/login';
     }
     return Promise.reject(error);
