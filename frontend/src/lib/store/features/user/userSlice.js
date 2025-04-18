@@ -1,4 +1,3 @@
-import { getAxios } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -33,9 +32,12 @@ export const registerUser = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
   async (id) => {
-    const axiosInstance = getAxios(); // ✅ this has the interceptor
-
-    const result = await axiosInstance.get(`/user/${id}`);
+    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
     return result?.data;
   }
 );
