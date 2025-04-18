@@ -19,7 +19,6 @@ function Navbar() {
 
 
     const handleLogout = () => {
-        // dispatch(logoutUser());
         dispatch(invalidateUser());
         sessionStorage.clear();
         toast.success('You have successfully logged out');

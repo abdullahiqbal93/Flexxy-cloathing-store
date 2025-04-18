@@ -1,7 +1,7 @@
+import { invalidateUser } from '@/lib/store/features/user/userSlice';
 import { User, Package, MapPin, Heart, Lock, LogOut } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '@/lib/store/features/user/userSlice';
 import { toast } from 'sonner';
 
 function ProfileSidebar({ activeTab, setActiveTab, user }) {
@@ -9,9 +9,10 @@ function ProfileSidebar({ activeTab, setActiveTab, user }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logoutUser());
-    toast.success('You have successfully logged out');
-    navigate('/login');
+        dispatch(invalidateUser());
+        sessionStorage.clear();
+        toast.success('You have successfully logged out');
+        navigate('/login');
   };
 
   const navItems = [
