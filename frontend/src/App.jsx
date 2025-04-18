@@ -36,7 +36,7 @@ function App() {
   const [showScroll, setShowScroll] = useState(false);
 
   useEffect(() => {
-    const token = JSON.parse(sessionStorage.getItem('authToken'))
+    const token = sessionStorage.getItem('authToken')
     dispatch(checkAuth(token));
 
     const handleScroll = () => {
