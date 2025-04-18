@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=Lax; domain=' + window.location.hostname;
+      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=Lax';
       window.location.href = '/login';
     }
     return Promise.reject(error);

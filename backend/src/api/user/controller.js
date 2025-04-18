@@ -113,7 +113,7 @@ export const loginUser = async (req, res) => {
     res.cookie('authToken', token, {
       httpOnly: true,
       secure: env.NODE_ENV === 'production',
-      sameSite: 'none',
+      sameSite: 'Lax',
       maxAge: 24 * 60 * 60 * 1000,
     });
     
