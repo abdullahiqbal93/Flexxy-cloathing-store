@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
-import { checkAuth } from '@/lib/store/features/user/userSlice';
 
 function PaypalReturnPage() {
   const dispatch = useDispatch();
@@ -17,17 +16,6 @@ function PaypalReturnPage() {
   const payerId = params.get('PayerID');
 
   useEffect(() => {
-    dispatch(checkAuth());
-  }, [dispatch]);
-
-  useEffect(() => {
-    // Restore auth token if it exists in localStorage
-    const tempAuthToken = localStorage.getItem('tempAuthToken');
-    if (tempAuthToken) {
-      document.cookie = `authToken=${tempAuthToken}; path=/; secure; SameSite=None`;
-      localStorage.removeItem('tempAuthToken');
-    }
-
     if (paymentId && payerId) {
       const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
       if (orderId) {

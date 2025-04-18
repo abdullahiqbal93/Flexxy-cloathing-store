@@ -35,11 +35,6 @@ function CheckoutPage() {
 
   useEffect(() => {
     if (approvalURL) {
-      // Store auth token before redirecting to PayPal
-      const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-      if (token) {
-        localStorage.setItem('tempAuthToken', token.split('=')[1]);
-      }
       window.location.href = approvalURL;
     }
   }, [approvalURL]);
