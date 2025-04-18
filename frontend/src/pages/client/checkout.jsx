@@ -35,6 +35,11 @@ function CheckoutPage() {
 
   useEffect(() => {
     if (approvalURL) {
+      // Store auth token before redirecting to PayPal
+      const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
+      if (token) {
+        localStorage.setItem('tempAuthToken', token.split('=')[1]);
+      }
       window.location.href = approvalURL;
     }
   }, [approvalURL]);
@@ -148,11 +153,6 @@ function CheckoutPage() {
 
     dispatch(createNewOrder(orderData)).then((result) => {
       if (result.payload?.success) {
-        // Store auth token before redirecting to PayPal
-        const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-        if (token) {
-          localStorage.setItem('tempAuthToken', token.split('=')[1]);
-        }
         toast.success('Redirecting to PayPal...');
       } else {
         toast.error('Failed to initiate payment: ' + (result.payload?.message || 'Unknown error'));
