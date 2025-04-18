@@ -1,6 +1,7 @@
-import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+
+const token = sessionStorage.getItem('authToken');
 
 export const initialState = {
   userList: [],
@@ -41,11 +42,24 @@ export const registerUser = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
   async (id) => {
-    const axiosInstance = await getAxiosWithToken();
-    const result = await axiosInstance.get(`/user/${id}`);
+    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
     return result?.data;
   }
 );
+
+// export const fetchUserById = createAsyncThunk(
+//   "/user/fetchUserById",
+//   async (id) => {
+//     const axiosInstance = await getAxiosWithToken();
+//     const result = await axiosInstance.get(`/user/${id}`);
+//     return result?.data;
+//   }
+// );
 
 export const editUser = createAsyncThunk(
   "/user/editUser",
