@@ -17,7 +17,15 @@ function PaymentSuccessPage() {
   }, []);
 
   useEffect(() => {
-    dispatch(checkAuth());
+    const check = async () => {
+      try {
+        await dispatch(checkAuth());
+      } catch (error) {
+        // Optionally handle error (e.g., log or show notification)
+        console.error("Auth check failed:", error);
+      }
+    };
+    check();
   }, [dispatch]);
 
   return (
