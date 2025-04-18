@@ -19,19 +19,25 @@ import rateLimit from 'express-rate-limit';
 // };
 
 export const verifyUserToken = async (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Auth failed: No token provided" });
-  }
-  const decoded = await verifyToken(token);
+  try {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    
+    if (!token) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Auth failed: No token provided" });
+    }
 
-  if (!decoded) {
+    const decoded = await verifyToken(token);
+    if (!decoded) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Auth failed: Invalid token" });
+    }
+
+    req.user = decoded;
+    next();
+  } catch (error) {
+    console.error('Token verification error:', error);
     return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Auth failed: Invalid token" });
   }
-
-  req.user = decoded;
-  next();
 };
 
 
