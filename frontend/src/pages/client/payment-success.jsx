@@ -3,10 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Truck, Home } from 'lucide-react';
+import { useDispatch } from "react-redux";
+import { checkAuth } from "@/lib/store/features/user/userSlice.js";
 
 function PaymentSuccessPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showConfetti, setShowConfetti] = useState(true);
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 3000);
