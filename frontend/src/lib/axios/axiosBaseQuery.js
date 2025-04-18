@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAxios, getJWTToken } from "./axios";
+import { getAxios } from "./axios";
 
 const getRequestConfig = (args) => {
   if (typeof args === "string") {
@@ -19,6 +19,7 @@ const axiosBaseQuery = ({ transformResponse } = {}) => {
         ...requestConfig,
         headers: {
           ...requestConfig.headers,
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
         },
         signal: api.signal,
         ...extraOptions,
