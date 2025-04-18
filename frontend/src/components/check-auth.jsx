@@ -7,10 +7,6 @@ function CheckAuth({ isAuthenticated, user, children }) {
     "/shop/profile",
     "/shop/orders",
     "/shop/checkout",
-    "/shop/paypal-return",
-    "/shop/paypal-cancel",
-    "/shop/payment-success",
-    "/shop/payment-failed",
   ];
 
   const protectedAdminRoutes = [
@@ -26,6 +22,10 @@ function CheckAuth({ isAuthenticated, user, children }) {
     "/shop/home",
     "/shop/listing",
     "/shop/product",
+    "/shop/paypal-return",
+    "/shop/paypal-cancel",
+    "/shop/payment-success",
+    "/shop/payment-failed",
   ];
 
   if (location.pathname === "/") {
