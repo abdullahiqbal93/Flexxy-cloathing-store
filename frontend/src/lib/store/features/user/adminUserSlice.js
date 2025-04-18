@@ -40,9 +40,9 @@ export const registerUser = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
   async (id) => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
-      withCredentials: true,
-    });
+    const { getAxiosWithToken } = await import('@/lib/axios/axios');
+    const axiosInstance = await getAxiosWithToken();
+    const result = await axiosInstance.get(`/user/${id}`);
     return result?.data;
   }
 );
