@@ -47,8 +47,7 @@ export const verifyToken = async (token) => {
       throw new Error("PRIVATE_KEY environment variable is not set");
     }
     const pk = await importPKCS8(env.PRIVATE_KEY, algorithm);
-    const { payload } = await jwtVerify(token, pk);
-    return payload;
+    return await jwtVerify(token, pk);
   } catch (error) {
     mainLogger.error("Error verifying token:", error);
     return null;
