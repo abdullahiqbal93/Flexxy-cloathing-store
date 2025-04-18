@@ -18,7 +18,18 @@ export const createNewOrder = createAsyncThunk('/order/createNewOrder',
 
 export const capturePayment = createAsyncThunk('/order/capturePayment',
   async ({ paymentId, payerId, orderId }) => {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/capture`, { paymentId, payerId, orderId });
+    const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/order/capture`, 
+      { paymentId, payerId, orderId },
+      {
+        withCredentials: true,
+        headers: {
+          'Authorization': token ? `Bearer ${token.split('=')[1]}` : '',
+          'Content-Type': 'application/json'
+        }
+      }
+    );
     return response.data;
   }
 );

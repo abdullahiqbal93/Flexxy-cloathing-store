@@ -101,7 +101,7 @@ export const checkAuth = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=Lax';
+      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=None';
       return rejectWithValue({ 
         success: false, 
         message: error.response?.data?.message || 'Authentication failed'
@@ -121,7 +121,7 @@ export const logoutUser = createAsyncThunk(
       }
     );
 
-    document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=Lax';
+    document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=None';
     return response.data;
   }
 );
@@ -137,7 +137,7 @@ export const userSlice = createSlice({
     invalidateUser: (state) => { 
       state.user = null;
       state.isAuthenticated = false;
-      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=Lax';
+      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=None';
     },
   },
   extraReducers: (builder) => {
