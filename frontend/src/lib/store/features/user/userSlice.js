@@ -34,6 +34,9 @@ export const fetchUserById = createAsyncThunk(
   async (id) => {
     const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+      }
     });
     return result?.data;
   }
@@ -169,7 +172,6 @@ export const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action.payload, 'login payload')
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
