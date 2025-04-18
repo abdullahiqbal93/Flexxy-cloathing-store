@@ -39,6 +39,8 @@ function ProfilePage() {
     phoneNumber: '',
   });
 
+  console.log(user, 'user data');
+
 
   useEffect(() => {
     if (!user?.id) return;

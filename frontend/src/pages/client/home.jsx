@@ -28,9 +28,6 @@ function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productList } = useSelector(state => state.product);
-  const { user } = useSelector(state => state.user);
-
-  console.log(user, 'user data');
 
   function handleNavigateToListingPage(getCurrentItem) {
     const currentFilter = { category: [getCurrentItem.name], brand: [] };
