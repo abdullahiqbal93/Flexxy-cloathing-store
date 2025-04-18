@@ -34,8 +34,7 @@ export const getAxios = () => {
       return Promise.reject(error);
     }
   );
-  
-  axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
   return axiosInstance;
 };
 
