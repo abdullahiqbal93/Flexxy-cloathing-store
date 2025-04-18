@@ -12,24 +12,20 @@ function PaymentSuccessPage() {
   const [showConfetti, setShowConfetti] = useState(true);
   const { user, isAuthenticated } = useSelector((state) => state.user);
 
-useEffect(() => {
-  if (!user) {
-    dispatch(checkAuth());
-    console.log("Checking auth...");
-  }
-}, [dispatch, user]);
+  console.log(user, 'user')
 
+  useEffect(() => {
+    if (!isAuthenticated || !user?.id) {
+      dispatch(checkAuth());
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (!user) {
-      dispatch(checkAuth());
-    }
-  }, [dispatch, user]);
+ 
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center relative overflow-hidden">
