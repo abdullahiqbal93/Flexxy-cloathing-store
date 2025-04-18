@@ -3,13 +3,22 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Truck, Home } from 'lucide-react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "@/lib/store/features/user/userSlice.js";
 
 function PaymentSuccessPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showConfetti, setShowConfetti] = useState(true);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+
+useEffect(() => {
+  if (!user) {
+    dispatch(checkAuth());
+    console.log("Checking auth...");
+  }
+}, [dispatch, user]);
+
 
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 3000);
@@ -17,16 +26,10 @@ function PaymentSuccessPage() {
   }, []);
 
   useEffect(() => {
-    const check = async () => {
-      try {
-        await dispatch(checkAuth());
-      } catch (error) {
-        // Optionally handle error (e.g., log or show notification)
-        console.error("Auth check failed:", error);
-      }
-    };
-    check();
-  }, [dispatch]);
+    if (!user) {
+      dispatch(checkAuth());
+    }
+  }, [dispatch, user]);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center relative overflow-hidden">
