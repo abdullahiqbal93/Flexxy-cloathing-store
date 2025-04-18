@@ -37,7 +37,6 @@ function App() {
 
   useEffect(() => {
     const token = sessionStorage.getItem('authToken')
-    console.log(token, 'token');
     dispatch(checkAuth(token));
 
     const handleScroll = () => {

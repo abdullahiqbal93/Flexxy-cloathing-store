@@ -1,5 +1,5 @@
+import { getAxios } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export const initialState = {
   user: null,
@@ -10,52 +10,19 @@ export const initialState = {
 
 export const registerUser = createAsyncThunk(
   "/auth/register",
-
   async (formData) => {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
-
-      return response.data;
-    } catch (error) {
-      return error.response?.data || { message: "Something went wrong" };
-    }
-
+    const axios = getAxios();
+    const response = await axios.post("/user", formData);
+    return response.data;
   }
 );
-
-export const fetchUserById = createAsyncThunk(
-  "/user/fetchUserById",
-  async (id) => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
-      withCredentials: true,
-    });
-    return result?.data;
-  }
-);
-
-
 
 export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/login`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        }
-      );
-
+      const axios = getAxios();
+      const response = await axios.post("/login", formData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong" });
@@ -63,35 +30,34 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const fetchUserById = createAsyncThunk(
+  "/user/fetchUserById",
+  async (id) => {
+    const axios = getAxios();
+    const result = await axios.get(`/user/${id}`);
+    return result.data;
+  }
+);
+
 export const editUser = createAsyncThunk(
   "/user/editUser",
   async ({ id, formData }) => {
-    const result = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`,
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
-
-    return result?.data;
+    const axios = getAxios();
+    const result = await axios.put(`/user/${id}`, formData);
+    return result.data;
   }
 );
 
 export const checkAuth = createAsyncThunk(
   "/auth/checkAuth",
-  async (token, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/check-auth`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-          }
+      const axios = getAxios();
+      const response = await axios.get("/check-auth", {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
         }
-      );
-
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue({ 
@@ -102,52 +68,16 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-// export const checkAuth = createAsyncThunk(
-//   "/auth/checkAuth",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-//       if (!token) {
-//         return rejectWithValue({ success: false, message: 'No auth token found' });
-//       }
-
-//       const response = await axios.get(
-//         `${import.meta.env.VITE_API_BASE_URL}/api/v1/check-auth`,
-//         {
-//           withCredentials: true,
-//           headers: {
-//             'Authorization': `Bearer ${token.split('=')[1]}`,
-//             'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-//           }
-//         }
-//       );
-
-//       return response.data;
-//     } catch (error) {
-//       document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=None';
-//       return rejectWithValue({ 
-//         success: false, 
-//         message: error.response?.data?.message || 'Authentication failed'
-//       });
-//     }
-//   }
-// );
-
 export const logoutUser = createAsyncThunk(
   "/auth/logout",
-
   async () => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/logout`, {},
-      {
-        withCredentials: true,
-      }
-    );
-
+    const axios = getAxios();
+    const response = await axios.post("/logout", {});
     document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=None';
     return response.data;
   }
 );
+
 
 export const userSlice = createSlice({
   name: "userSlice",
