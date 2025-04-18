@@ -34,15 +34,10 @@ export const fetchUserById = createAsyncThunk(
   async (id) => {
     const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
       withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
     });
     return result?.data;
   }
 );
-
-
 
 export const loginUser = createAsyncThunk(
   "/auth/login",

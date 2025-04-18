@@ -22,7 +22,7 @@ export const user = (router) => {
         updateUserPassword
     );
 
-    router.get("/user/:id", validateRequestParams(getByIDSchemaParams), verifyUserToken, getUserById);
+    router.get("/user/:id", validateRequestParams(getByIDSchemaParams), getUserById);
 
     router.put(
         "/user/:id",
