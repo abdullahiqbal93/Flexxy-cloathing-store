@@ -3,23 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Truck, Home } from 'lucide-react';
-import { checkAuth } from '@/lib/store/features/user/userSlice';
-import { useDispatch } from 'react-redux';
 
 function PaymentSuccessPage() {
   const navigate = useNavigate();
   const [showConfetti, setShowConfetti] = useState(true);
-  const dispatch = useDispatch();
-
-  async function handleProfileVisit() {
-    const result = await dispatch(checkAuth());
-    if (checkAuth.fulfilled.match(result)) {
-      navigate("/shop/profile");
-    } else {
-      console.log("User not authenticated");
-    }
-  }
-  
 
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 3000);
@@ -105,7 +92,7 @@ function PaymentSuccessPage() {
           <div className="space-y-3">
             <Button
               className="w-full py-4 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg transition-colors"
-              onClick={() => handleProfileVisit()}
+              onClick={() => navigate("/shop/profile")}
             >
               <ShoppingBag className="mr-2 h-4 w-4" />
               View Order
