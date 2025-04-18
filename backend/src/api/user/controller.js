@@ -110,15 +110,27 @@ export const loginUser = async (req, res) => {
 
     const token = await generateToken({ id: existingUser._id, email: existingUser.email, role: existingUser.role, name: existingUser.name });
 
-    res.cookie('authToken', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-    
+    // res.cookie('authToken', token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: 'None',
+    //   maxAge: 24 * 60 * 60 * 1000,
+    // });
 
-    return createSuccessResponse(res, { id: existingUser._id, name: existingUser.name, role: existingUser.role, phoneNumber: existingUser.phoneNumber, email: existingUser.email, token: token }, StatusCodes.OK, "Login successful");
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      token,
+      user: {
+        id: existingUser._id,
+        name: existingUser.name,
+        role: existingUser.role,
+        phoneNumber: existingUser.phoneNumber,
+        email: existingUser.email,
+      }
+    })
+    
+    // return createSuccessResponse(res, { id: existingUser._id, name: existingUser.name, role: existingUser.role, phoneNumber: existingUser.phoneNumber, email: existingUser.email, token: token }, StatusCodes.OK, "Login successful");
   } catch (e) {
     return createErrorResponse(res, handleError(e), StatusCodes.INTERNAL_SERVER_ERROR, "Login failed");
   }

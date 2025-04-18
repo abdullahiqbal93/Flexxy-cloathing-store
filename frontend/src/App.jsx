@@ -18,7 +18,7 @@ import ProductDetailPage from '@/pages/client/product.jsx';
 import ProductListPage from '@/pages/admin/product_list.jsx';
 import AdminUserListPage from '@/pages/admin/userList.jsx';
 import AdminOrderListPage from "@/pages/admin/order.jsx";
-import AdminLayout from '@/components/admin/adminLayout.jsx'; 
+import AdminLayout from '@/components/admin/adminLayout.jsx';
 import AdminSettings from '@/components/admin/adminSettings.jsx';
 import ProfilePage from '@/pages/client/profile.jsx';
 import PaypalReturnPage from '@/pages/client/paypal-return.jsx';
@@ -36,7 +36,9 @@ function App() {
   const [showScroll, setShowScroll] = useState(false);
 
   useEffect(() => {
-    dispatch(checkAuth());
+    const token = JSON.parse(sessionStorage.getItem('authToken'))
+    dispatch(checkAuth(token));
+
     const handleScroll = () => {
       setShowScroll(window.scrollY > 300);
     };
@@ -96,7 +98,7 @@ function App() {
           <Route path="order" element={<AdminOrderListPage />} />
           <Route path="settings" element={<AdminSettings />} />
           <Route path="newsletter" element={<NewsletterManagement />} />
-          
+
         </Route>
 
         <Route
@@ -121,8 +123,8 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       {showScroll && (
-        <button 
-          onClick={scrollToTop} 
+        <button
+          onClick={scrollToTop}
           className="fixed bottom-6 right-6 bg-black text-white p-3 rounded-full shadow-lg hover:bg-gray-800 transition-all flex items-center justify-center w-12 h-12"
         >
           <ArrowUp size={24} />

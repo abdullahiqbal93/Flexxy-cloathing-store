@@ -3,8 +3,24 @@ import { StatusCodes } from "http-status-codes";
 import rateLimit from 'express-rate-limit';
 
 
+// export const verifyUserToken = async (req, res, next) => {
+//   const token = (req.cookies["authToken"] || req.headers["authorization"] || "").replace(/bearer\s*/i, "");
+//   if (!token) {
+//     return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Auth failed: No token provided" });
+//   }
+//   const decoded = await verifyToken(token);
+
+//   if (!decoded) {
+//     return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Auth failed: Invalid token" });
+//   }
+
+//   req.user = decoded;
+//   next();
+// };
+
 export const verifyUserToken = async (req, res, next) => {
-  const token = (req.cookies["authToken"] || req.headers["authorization"] || "").replace(/bearer\s*/i, "");
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({ message: "Auth failed: No token provided" });
   }

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { fetchUserCartItems } from '@/lib/store/features/cart/cartSlice';
-import { logoutUser } from '@/lib/store/features/user/userSlice';
+import { invalidateUser } from '@/lib/store/features/user/userSlice';
 import { ArrowLeft, Menu, ShoppingCart, UserRound } from 'lucide-react';
 import { Sheet } from '@/components/ui/sheet';
 import UserCartWrapper from '@/components/cart-wrapper';
@@ -19,7 +19,9 @@ function Navbar() {
 
 
     const handleLogout = () => {
-        dispatch(logoutUser());
+        // dispatch(logoutUser());
+        dispatch(invalidateUser());
+        sessionStorage.clear();
         toast.success('You have successfully logged out');
         navigate('/login');
     };
