@@ -1,3 +1,4 @@
+import { getAxios } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -7,6 +8,7 @@ export const initialState = {
   isLoading: true,
   token: null,
 };
+
 
 export const registerUser = createAsyncThunk(
   "/auth/register",
@@ -29,17 +31,30 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+// export const fetchUserById = createAsyncThunk(
+//   "/user/fetchUserById",
+//   async (id) => {
+//     const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
+//       withCredentials: true,
+//     });
+//     return result?.data;
+//   }
+// );
+
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
-  async (id) => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
-      withCredentials: true,
-    });
-    return result?.data;
+  async (id, { rejectWithValue }) => {
+    try {
+      const axios = getAxios();
+      const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
+        withCredentials: true,
+      });
+      return result.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
-
-
 
 export const loginUser = createAsyncThunk(
   "/auth/login",

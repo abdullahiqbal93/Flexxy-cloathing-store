@@ -1,13 +1,12 @@
 import axios from "axios";
 
 export function getJWTToken() {
-  const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-  return token ? token.split('=')[1] : null;
+  return sessionStorage.getItem("authToken");
 }
 
 const axiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
-  withCredentials: true,
+  withCredentials: true, 
 });
 
 axiosInstance.interceptors.request.use(
@@ -27,8 +26,8 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      document.cookie = 'authToken=; Max-Age=0; path=/; secure; SameSite=None';
-      window.location.href = '/login';
+      sessionStorage.removeItem("authToken"); 
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
