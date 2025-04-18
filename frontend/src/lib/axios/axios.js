@@ -14,12 +14,13 @@ axiosInstance.interceptors.request.use(
     const token = getJWTToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log("✅ Token added to request:", token); // <-- Add this
+    } else {
+      console.log("❌ No token found in sessionStorage");
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
