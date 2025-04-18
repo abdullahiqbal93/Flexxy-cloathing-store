@@ -16,6 +16,13 @@ function PaypalReturnPage() {
   const payerId = params.get('PayerID');
 
   useEffect(() => {
+    // Restore auth token if it exists in localStorage
+    const tempAuthToken = localStorage.getItem('tempAuthToken');
+    if (tempAuthToken) {
+      document.cookie = `authToken=${tempAuthToken}; path=/; secure; SameSite=None`;
+      localStorage.removeItem('tempAuthToken');
+    }
+
     if (paymentId && payerId) {
       const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
       if (orderId) {
