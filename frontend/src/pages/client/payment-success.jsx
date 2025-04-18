@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
@@ -11,14 +11,17 @@ function PaymentSuccessPage() {
   const dispatch = useDispatch();
   const [showConfetti, setShowConfetti] = useState(true);
   const { user, isAuthenticated } = useSelector((state) => state.user);
+  const authChecked = useRef(false)
 
   console.log(user, 'user')
 
   useEffect(() => {
-    if (!isAuthenticated || !user?.id) {
+    if (!authChecked.current) {
+      console.log("Checking auth...");
       dispatch(checkAuth());
+      authChecked.current = true; 
     }
-  }, [dispatch, user]);
+  }, [dispatch]);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 3000);
