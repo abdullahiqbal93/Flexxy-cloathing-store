@@ -1,3 +1,4 @@
+import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
