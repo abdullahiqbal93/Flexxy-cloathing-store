@@ -12,13 +12,13 @@ function PaymentSuccessPage() {
   const [showConfetti, setShowConfetti] = useState(true);
 
   useEffect(() => {
-    dispatch(checkAuth());
-  }, [dispatch]);
-
-  useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center relative overflow-hidden">
