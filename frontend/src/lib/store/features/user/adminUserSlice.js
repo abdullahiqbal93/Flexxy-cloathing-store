@@ -1,3 +1,4 @@
+import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -40,7 +41,6 @@ export const registerUser = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
   async (id) => {
-    const { getAxiosWithToken } = await import('@/lib/axios/axios');
     const axiosInstance = await getAxiosWithToken();
     const result = await axiosInstance.get(`/user/${id}`);
     return result?.data;
