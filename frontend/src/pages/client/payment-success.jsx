@@ -1,34 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Truck, Home } from 'lucide-react';
-import { useDispatch, useSelector } from "react-redux";
-import { checkAuth } from "@/lib/store/features/user/userSlice.js";
+import { checkAuth } from '@/lib/store/features/user/userSlice';
+import { useDispatch } from 'react-redux';
 
 function PaymentSuccessPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [showConfetti, setShowConfetti] = useState(true);
-  const { user, isAuthenticated } = useSelector((state) => state.user);
-  const authChecked = useRef(false)
+  const dispatch = useDispatch();
 
-  console.log(user, 'user')
-
-  useEffect(() => {
-    if (!authChecked.current) {
-      console.log("Checking auth...");
-      dispatch(checkAuth());
-      authChecked.current = true; 
+  async function handleProfileVisit() {
+    const result = await dispatch(checkAuth());
+    if (checkAuth.fulfilled.match(result)) {
+      navigate("/shop/profile");
+    } else {
+      console.log("User not authenticated");
     }
-  }, [dispatch]);
+  }
+  
 
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 3000);
     return () => clearTimeout(timer);
   }, []);
-
- 
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center relative overflow-hidden">
@@ -109,7 +105,7 @@ function PaymentSuccessPage() {
           <div className="space-y-3">
             <Button
               className="w-full py-4 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg transition-colors"
-              onClick={() => navigate("/shop/profile")}
+              onClick={() => handleProfileVisit()}
             >
               <ShoppingBag className="mr-2 h-4 w-4" />
               View Order
