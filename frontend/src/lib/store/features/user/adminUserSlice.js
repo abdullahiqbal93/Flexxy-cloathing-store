@@ -10,9 +10,8 @@ export const initialState = {
 export const fetchAllUsers = createAsyncThunk(
   "/user/fetchAllUsers",
   async () => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user`, {
-      withCredentials: true,
-    });
+    const axiosInstance = await getAxiosWithToken();
+    const result = await axiosInstance.get(`/user`);
 
     return result?.data;
   }

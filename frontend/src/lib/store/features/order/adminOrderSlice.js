@@ -1,3 +1,4 @@
+import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -10,16 +11,15 @@ const initialState = {
 export const getAllOrdersForAdmin = createAsyncThunk(
   "/order/getAllOrdersForAdmin",
   async () => {
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order`);
+    const axiosInstance = await getAxiosWithToken();
+
+    const response = await axiosInstance.get(`/order`);
     const orders = response.data.data;
 
     const ordersWithUsers = await Promise.all(
       orders.map(async (order) => {
         try {
-          const userResponse = await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${order.userId}`,
-            { withCredentials: true }
-          );
+          const userResponse = await axiosInstance.get(`/user/${order.userId}`);
           return {
             ...order,
             user: userResponse.data.data
