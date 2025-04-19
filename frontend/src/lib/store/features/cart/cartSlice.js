@@ -128,11 +128,11 @@ const cartSlice = createSlice({
         state.isLoading = false;
         state.cartItems = [];
       })
-      .addCase(invalidateUser.fulfilled, (state) => {
+      .addCase(invalidateUser, (state) => {
         state.cartItems = [];
         state.isLoading = false;
       })
-      .addCase(logoutUser.fulfilled, (state) => {
+      .addCase(logoutUser, (state) => {
         state.cartItems = [];
         state.isLoading = false;
       });
