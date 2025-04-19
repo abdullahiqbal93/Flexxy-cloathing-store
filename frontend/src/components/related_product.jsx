@@ -44,7 +44,7 @@ function RelatedProducts({ products, category, brand, handleAddToCart }) {
                 {related.map((product, index) => (
                     <div 
                         key={index} 
-                        className="flex-shrink-0 w-[250px] sm:w-[280px] md:w-[280px] lg:w-[320px]"
+                        className="flex-shrink-0 w-64"
                     >
                         <ProductCard item={product} handleAddToCart={handleAddToCart} />
                     </div>
