@@ -120,7 +120,7 @@ const AuthPage = () => {
                     <div className="mt-4">
                         <Link 
                             to="/" 
-                            className="text-blue-600 hover:text-blue-900 hover:underline font-medium"
+                            className="text-gray-600 hover:text-gray-900 hover:underline font-medium"
                         >
                             Go to Home
                         </Link>
