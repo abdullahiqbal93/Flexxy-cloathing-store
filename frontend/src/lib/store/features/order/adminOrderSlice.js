@@ -12,27 +12,20 @@ export const getAllOrdersForAdmin = createAsyncThunk(
   "/order/getAllOrdersForAdmin",
   async () => {
     const axiosInstance = await getAxiosWithToken();
-
-    const response = await axiosInstance.get(`/order`);
-    const orders = response.data.data;
-
-    const ordersWithUsers = await Promise.all(
-      orders.map(async (order) => {
-        try {
-          const userResponse = await axiosInstance.get(`/user/${order.userId}`);
-          return {
-            ...order,
-            user: userResponse.data.data
-          };
-        } catch (error) {
-          return {
-            ...order,
-            user: null
-          };
-        }
-      })
-    );
-
+    const [ordersResponse, usersResponse] = await Promise.all([
+      axiosInstance.get(`/order`),
+      axiosInstance.get(`/user`)
+    ]);
+    const orders = ordersResponse.data.data;
+    const users = usersResponse.data.data;
+    const userMap = users.reduce((acc, user) => {
+      acc[user._id] = user;
+      return acc;
+    }, {});
+    const ordersWithUsers = orders.map(order => ({
+      ...order,
+      user: userMap[order.userId] || null
+    }));
     return { data: ordersWithUsers };
   }
 );
