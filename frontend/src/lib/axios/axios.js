@@ -25,10 +25,13 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
-      sessionStorage.removeItem("authToken"); 
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && originalRequest.logoutOn401) {
+      sessionStorage.removeItem("authToken");
       window.location.href = "/login";
     }
+
     return Promise.reject(error);
   }
 );

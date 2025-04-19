@@ -160,7 +160,7 @@ export const updateUserPassword = async (req, res) => {
 
     const isMatch = await compareUserPassword(currentPassword, user.password);
     if (!isMatch) {
-      return createErrorResponse(res, null, StatusCodes.BAD_REQUEST, "Current password is incorrect");
+      return createErrorResponse(res, null, StatusCodes.UNAUTHORIZED, "Current password is incorrect");
     }
 
     const isSameAsOldPassword = await compareUserPassword(newPassword, user.password);
