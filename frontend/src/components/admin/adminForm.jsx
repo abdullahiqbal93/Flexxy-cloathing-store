@@ -55,6 +55,7 @@ const AdminForm = ({ adminData, setAdminData, onSubmit, onCancel, isLoading, isE
         >
           <option value="super-admin">Super Admin</option>
           <option value="admin">Admin</option>
+          <option value="user">User</option>
         </select>
       </div>
       <div className="md:col-span-2">

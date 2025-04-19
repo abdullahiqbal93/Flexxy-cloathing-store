@@ -57,6 +57,7 @@ const AdminTable = ({ userList, isLoading, editingAdmin, setEditingAdmin, saveEd
                         >
                           <option value="super-admin">Super Admin</option>
                           <option value="admin">Admin</option>
+                          <option value="user">User</option>
                         </select>
                       </td>
                       <td className="px-4 py-2">{new Date(admin.updatedAt).toLocaleDateString()}</td>
@@ -86,7 +87,9 @@ const AdminTable = ({ userList, isLoading, editingAdmin, setEditingAdmin, saveEd
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-medium ${admin.role === "super-admin"
                               ? "bg-purple-100 text-purple-800"
-                              : "bg-blue-100 text-blue-800"
+                              : admin.role === "admin"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-gray-100 text-gray-800"
                             }`}
                         >
                           {admin.role}
