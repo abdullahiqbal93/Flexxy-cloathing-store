@@ -60,22 +60,16 @@ export const fetchUserById = createAsyncThunk(
 export const editUser = createAsyncThunk(
   "/user/editUser",
   async ({ id, formData }) => {
-    const result = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`,
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
+    const axiosInstance = await getAxiosWithToken();
+    const result = await axiosInstance.put(`/user/${id}`, formData);
 
     return result?.data;
   }
 );
 
 export const deleteUser = createAsyncThunk("/user/deleteUser", async (id) => {
-  const result = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
-    withCredentials: true,
-  });
+  const axiosInstance = await getAxiosWithToken();
+  const result = await axiosInstance.delete(`/user/${id}`);
 
   return result?.data;
 });
@@ -84,11 +78,11 @@ export const changeUserPassword = createAsyncThunk(
   "user/changePassword",
   async ({ currentPassword, newPassword }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/change-password`,
-        { currentPassword, newPassword },
-        { withCredentials: true }
-      );
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.put(`/user/change-password`, {
+        currentPassword,
+        newPassword,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(

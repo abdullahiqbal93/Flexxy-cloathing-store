@@ -1,3 +1,4 @@
+import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -32,9 +33,8 @@ export const registerUser = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
   async (id) => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
-      withCredentials: true,
-    });
+    const axiosInstance = await getAxiosWithToken();
+    const result = await axiosInstance.get(`/user/${id}`);
     return result?.data;
   }
 );
@@ -64,13 +64,8 @@ export const loginUser = createAsyncThunk(
 export const editUser = createAsyncThunk(
   "/user/editUser",
   async ({ id, formData }) => {
-    const result = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`,
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
+    const axiosInstance = await getAxiosWithToken();
+    const result = await axiosInstance.put(`/user/${id}`, formData);
 
     return result?.data;
   }
@@ -92,8 +87,8 @@ export const checkAuth = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue({ 
-        success: false, 
+      return rejectWithValue({
+        success: false,
         message: error.response?.data?.message || 'Authentication failed'
       });
     }
@@ -155,7 +150,7 @@ export const userSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = true;
     },
-    invalidateUser: (state) => { 
+    invalidateUser: (state) => {
       state.user = null;
       state.isAuthenticated = false;
       state.token = null;
@@ -172,7 +167,7 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
-        state.token =  action.payload.token
+        state.token = action.payload.token
         sessionStorage.setItem('authToken', action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
