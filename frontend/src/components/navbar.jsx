@@ -22,7 +22,7 @@ function Navbar() {
         dispatch(invalidateUser());
         sessionStorage.clear();
         toast.success('You have successfully logged out');
-        navigate('/login');
+        navigate('/shop/home');
     };
 
     useEffect(() => {
