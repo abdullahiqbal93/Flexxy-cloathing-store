@@ -1,77 +1,33 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { invalidateUser, logoutUser } from "../user/userSlice";
-import { getAxiosWithToken } from "@/lib/axios/axios";
+import axios from "axios";
+import { logoutUser } from "../user/userSlice";
 
 const initialState = {
   cartItems: [],
   isLoading: false,
 };
 
-export const addToCart = createAsyncThunk(
-  "cart/addToCart",
-  async ({ userId, productId, quantity, size, color }, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.post("/cart", {
-        userId,
-        productId,
-        quantity,
-        size,
-        color,
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Failed to add to cart");
-    }
-  }
-);
+export const addToCart = createAsyncThunk("cart/addToCart", async ({ userId, productId, quantity, size, color }) => {
+  const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart`, { userId, productId, quantity, size, color });
+  return response.data;
+});
 
-export const fetchUserCartItems = createAsyncThunk(
-  "cart/fetchUserCartItems",
-  async (userId, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.get(`/cart/${userId}`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Failed to fetch cart items");
-    }
-  }
-);
+export const fetchUserCartItems = createAsyncThunk("cart/fetchUserCartItems", async (userId) => {
+  const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart/${userId}`);
+  return response.data;
+});
 
-export const updateCartItemQuantity = createAsyncThunk(
-  "cart/updateCartItemQuantity",
-  async ({ userId, productId, size, color, quantity }, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.put("/cart", {
-        userId,
-        productId,
-        size,
-        color,
-        quantity,
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Failed to update cart");
-    }
-  }
-);
+export const updateCartItemQuantity = createAsyncThunk("cart/updateCartItemQuantity", async ({ userId, productId, size, color, quantity }) => {
+  const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart`, { userId, productId, size, color, quantity });
+  return response.data;
+});
 
-export const deleteCartItem = createAsyncThunk(
-  "cart/deleteCartItem",
-  async ({ userId, productId, size, color }, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.delete("/cart", {
-        data: { userId, productId, size, color },
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Failed to delete cart item");
-    }
-  }
-);
+export const deleteCartItem = createAsyncThunk("cart/deleteCartItem", async ({ userId, productId, size, color }) => {
+  const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart`, {
+    data: { userId, productId, size, color },
+  });
+  return response.data;
+});
 
 const cartSlice = createSlice({
   name: "cartSlice",
@@ -135,5 +91,4 @@ const cartSlice = createSlice({
   },
 });
 
-export const { clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

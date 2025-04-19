@@ -1,22 +1,16 @@
-import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import axios from "axios";
 
 const initialState = {
     isLoading: false,
     searchResults: [],
 };
 
-export const getSearchResults = createAsyncThunk(
-    "/product/getSearchResults",
-    async (keyword, { rejectWithValue }) => {
-        try {
-            const axiosInstance = await getAxiosWithToken();
-            const response = await axiosInstance.get(`/search/${keyword}`);
-            return response.data;
-        } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Search failed");
-        }
+export const getSearchResults = createAsyncThunk("/product/getSearchResults",
+    async (keyword) => {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/search/${keyword}`);
+
+        return response.data;
     }
 );
 

@@ -1,13 +1,11 @@
-import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import axios from "axios";
 
 export const fetchWishlist = createAsyncThunk(
   "wishlist/fetchWishlist",
   async (userId, { rejectWithValue }) => {
     try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.get(`/wishlist/${userId}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/wishlist/${userId}`);
       return response.data.data.products || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to fetch wishlist");
@@ -19,8 +17,7 @@ export const addToWishlist = createAsyncThunk(
   "wishlist/addToWishlist",
   async ({ userId, productId }, { rejectWithValue }) => {
     try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.post(`/wishlist`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/wishlist`, {
         userId,
         products: [productId],
       });
@@ -35,8 +32,7 @@ export const removeFromWishlist = createAsyncThunk(
   "wishlist/removeFromWishlist",
   async ({ userId, productId }, { rejectWithValue }) => {
     try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.delete(`/wishlist`, {
+      const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/wishlist`, {
         data: { userId, products: [productId] },
       });
       return response.data.data.products;

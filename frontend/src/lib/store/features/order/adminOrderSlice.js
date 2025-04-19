@@ -1,5 +1,5 @@
-import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   orderList: [],
@@ -9,79 +9,66 @@ const initialState = {
 
 export const getAllOrdersForAdmin = createAsyncThunk(
   "/order/getAllOrdersForAdmin",
-  async (_, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.get(`/order`);
-      const orders = response.data.data;
+  async () => {
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order`);
+    const orders = response.data.data;
 
-      const ordersWithUsers = await Promise.all(
-        orders.map(async (order) => {
-          try {
-            const userRes = await axiosInstance.get(`/user/${order.userId}`);
-            return { ...order, user: userRes.data.data };
-          } catch {
-            return { ...order, user: null };
-          }
-        })
-      );
+    const ordersWithUsers = await Promise.all(
+      orders.map(async (order) => {
+        try {
+          const userResponse = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${order.userId}`,
+            { withCredentials: true }
+          );
+          return {
+            ...order,
+            user: userResponse.data.data
+          };
+        } catch (error) {
+          return {
+            ...order,
+            user: null
+          };
+        }
+      })
+    );
 
-      return { data: ordersWithUsers };
-    } catch (err) {
-      return rejectWithValue(err.response?.data || "Fetching orders failed");
-    }
+    return { data: ordersWithUsers };
   }
 );
 
 export const getOrderDetailsForAdmin = createAsyncThunk(
   "/order/getOrderDetailsForAdmin",
-  async (id, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.get(`/order/${id}`);
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || "Fetching order details failed");
-    }
+  async (id) => {
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/${id}`);
+    return response.data;
   }
 );
 
 export const deleteOrder = createAsyncThunk(
   "/order/deleteOrder",
-  async (id, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.delete(`/order/${id}`);
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || "Deleting order failed");
-    }
+  async (id) => {
+    const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/${id}`);
+    return response.data;
   }
 );
 
 export const updateOrderStatus = createAsyncThunk(
   "/order/updateOrderStatus",
-  async ({ id, orderStatus }, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.put(`/order/${id}`, { orderStatus });
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || "Updating status failed");
-    }
+  async ({ id, orderStatus }) => {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/order/${id}`,
+      { orderStatus }
+    );
+    return response.data;
   }
 );
 
 export const deleteOrderForAdmin = createAsyncThunk(
-  "/order/deleteOrderForAdmin",
-  async (id, { rejectWithValue }) => {
-    try {
-      const axiosInstance = await getAxiosWithToken();
-      const response = await axiosInstance.put(`/order/admin-delete/${id}`);
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || "Soft delete failed");
-    }
+  '/order/deleteOrderForAdmin',
+  async (id) => {
+    const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/admin-delete/${id}`);
+    return response.data;
   }
 );
 
@@ -125,7 +112,7 @@ const adminOrderSlice = createSlice({
         const updatedOrder = action.payload.order;
         const index = state.orderList.findIndex((o) => o._id === updatedOrder?._id);
         if (index !== -1) {
-          state.orderList[index] = updatedOrder;
+          state.orderList[index] = updatedOrder; 
         }
       })
       .addCase(deleteOrderForAdmin.rejected, (state) => {
