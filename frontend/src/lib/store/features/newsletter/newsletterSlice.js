@@ -1,3 +1,4 @@
+import { getAxiosWithToken } from '@/lib/axios/axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -13,7 +14,8 @@ export const fetchSubscribers = createAsyncThunk(
   'newsletter/fetchSubscribers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/newsletter/subscribers`);
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.get('/newsletter/subscribers');
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch subscribers');
@@ -29,7 +31,7 @@ export const subscribeEmail = createAsyncThunk(
       toast.success('Successfully subscribed to newsletter!');
       return email;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.data.message || 'Failed to subscribe');
+      return rejectWithValue(error.response?.data?.data?.message || 'Failed to subscribe');
     }
   }
 );
@@ -38,7 +40,8 @@ export const unsubscribeNewsletter = createAsyncThunk(
   'newsletter/unsubscribe',
   async (email, { rejectWithValue, dispatch }) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/newsletter/unsubscribe`, { email });
+      const axiosInstance = await getAxiosWithToken();
+      await axiosInstance.post('/newsletter/unsubscribe', { email });
       toast.success('Successfully unsubscribed');
       dispatch(fetchSubscribers());
       return email;
@@ -52,10 +55,8 @@ export const sendNewsletter = createAsyncThunk(
   'newsletter/send',
   async ({ subject, content }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/newsletter/send`,
-        { subject, content }
-      );
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.post('/newsletter/send', { subject, content });
       toast.success('Newsletter sent successfully!');
       return response.data.data;
     } catch (error) {
@@ -118,9 +119,9 @@ const newsletterSlice = createSlice({
       .addCase(unsubscribeNewsletter.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
+      });
   }
 });
 
-export const { clearResult, clearError } = newsletterSlice.actions;
+export const { clearError } = newsletterSlice.actions;
 export default newsletterSlice.reducer;

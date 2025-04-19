@@ -1,5 +1,5 @@
+import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const initialState = {
   isLoading: false,
@@ -11,155 +11,171 @@ const initialState = {
   averageRatings: {},
 };
 
+
+
 export const addNewProduct = createAsyncThunk(
   "/product/addnewproduct",
-  async (formData) => {
-    const result = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product`,
-      formData
-    );
-    return result?.data;
-  }
-);
-
-export const fetchAllProducts = createAsyncThunk(
-  "/product/fetchAllProducts",
-  async () => {
-    const result = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product`
-    );
-
-    return result?.data;
-  }
-);
-
-export const fetchProductById = createAsyncThunk(
-  "/product/fetchProductById",
-  async (productId) => {
-    const result = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${productId}`
-    );
-
-    return result?.data;
+  async (formData, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.post(`/product`, formData);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Failed to add product");
+    }
   }
 );
 
 export const editProduct = createAsyncThunk(
   "/product/editProduct",
-  async ({ id, formData }) => {
-    const result = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${id}`,
-      formData,
-    );
-
-    return result?.data;
+  async ({ id, formData }, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.put(`/product/${id}`, formData);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Failed to edit product");
+    }
   }
 );
 
 export const deleteProduct = createAsyncThunk(
   "/product/deleteProduct",
-  async (id) => {
-    const result = await axios.delete(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${id}`
-    );
-
-    return result?.data;
+  async (id, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.delete(`/product/${id}`);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Failed to delete product");
+    }
   }
-);
-
-export const fetchAllFilteredProducts = createAsyncThunk("/product/fetchAllFilteredProducts", async ({ filterParams, sortParams }) => {
-
-  const query = new URLSearchParams({
-    ...filterParams,
-    sortBy: sortParams,
-  });
-
-  const result = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/v1/filtered-products?${query}`
-  );
-
-  return result?.data;
-}
-);
-
-export const fetchProductDetails = createAsyncThunk("/product/fetchProductDetails", async (id) => {
-  const result = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/product/${id}`
-  );
-
-  return result?.data;
-}
-);
-
-export const fetchAllBrands = createAsyncThunk("/product/fetchBrands", async () => {
-  const result = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/brand`
-  );
-
-  return result?.data;
-}
 );
 
 export const addReview = createAsyncThunk(
   "/product/addReview",
-  async ({ productId, formdata }) => {
+  async ({ productId, formdata }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${productId}/review`,
-        formdata,
-        { withCredentials: true }
-      );
-      return response.data;
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.post(`/product/${productId}/review`, formdata);
+      return result.data;
     } catch (error) {
-      return error.response?.data || { message: "Failed to add review" };
+      return rejectWithValue(error.response?.data || { message: "Failed to add review" });
     }
   }
 );
 
 export const updateReview = createAsyncThunk(
   "/product/updateReview",
-  async ({ productId, reviewId, formdata }) => {
+  async ({ productId, reviewId, formdata }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${productId}/review/${reviewId}`,
-        formdata,
-        { withCredentials: true }
-      );
-      return response.data;
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.put(`/product/${productId}/review/${reviewId}`, formdata);
+      return result.data;
     } catch (error) {
-      return error.response?.data || { message: "Failed to update review" };
+      return rejectWithValue(error.response?.data || { message: "Failed to update review" });
     }
   }
 );
 
 export const deleteReview = createAsyncThunk(
   "/product/deleteReview",
-  async ({ productId, reviewId, userId }) => {
+  async ({ productId, reviewId, userId }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/${productId}/review/${reviewId}`,
-        { 
-          data: { userId },
-          withCredentials: true 
-        }
-      );
-      return { ...response.data, productId, reviewId };
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.delete(`/product/${productId}/review/${reviewId}`, {
+        data: { userId },
+      });
+      return { ...result.data, productId, reviewId };
     } catch (error) {
-      return error.response?.data || { message: "Failed to delete review" };
+      return rejectWithValue(error.response?.data || { message: "Failed to delete review" });
     }
   }
 );
 
+
+
+export const fetchAllProducts = createAsyncThunk(
+  "/product/fetchAllProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.get(`/product`);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue("Failed to fetch products");
+    }
+  }
+);
+
+export const fetchProductById = createAsyncThunk(
+  "/product/fetchProductById",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.get(`/product/${productId}`);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue("Failed to fetch product details");
+    }
+  }
+);
+
+export const fetchAllFilteredProducts = createAsyncThunk(
+  "/product/fetchAllFilteredProducts",
+  async ({ filterParams, sortParams }, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const query = new URLSearchParams({
+        ...filterParams,
+        sortBy: sortParams,
+      });
+      const result = await axiosInstance.get(`/filtered-products?${query}`);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue("Failed to fetch filtered products");
+    }
+  }
+);
+
+export const fetchProductDetails = createAsyncThunk(
+  "/product/fetchProductDetails",
+  async (id, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.get(`/product/${id}`);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue("Failed to fetch product details");
+    }
+  }
+);
+
+export const fetchAllBrands = createAsyncThunk(
+  "/product/fetchBrands",
+  async (_, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.get(`/product/brand`);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue("Failed to fetch brands");
+    }
+  }
+);
+
+
+
 const updateAverageRating = (state, productId) => {
   const product = state.productDetails;
   if (!product || !product.reviews) return;
-  
+
   const totalRating = product.reviews.reduce((sum, review) => sum + review.reviewValue, 0);
   product.averageRating = product.reviews.length ? totalRating / product.reviews.length : 0;
 };
 
 const productSlice = createSlice({
-  name: 'productSlice',
+  name: "productSlice",
   initialState,
   reducers: {
     resetProductDetails: (state) => {
@@ -233,13 +249,11 @@ const productSlice = createSlice({
       })
       .addCase(deleteReview.fulfilled, (state, action) => {
         state.isLoading = false;
-        if (action.payload.success) {
-          if (state.productDetails) {
-            state.productDetails.reviews = state.productDetails.reviews.filter(
-              (review) => review._id !== action.payload.reviewId
-            );
-            updateAverageRating(state, action.payload.productId);
-          }
+        if (action.payload.success && state.productDetails) {
+          state.productDetails.reviews = state.productDetails.reviews.filter(
+            (review) => review._id !== action.payload.reviewId
+          );
+          updateAverageRating(state, action.payload.productId);
         }
       })
       .addCase(deleteReview.rejected, (state) => {
@@ -249,5 +263,4 @@ const productSlice = createSlice({
 });
 
 export const { resetProductDetails } = productSlice.actions;
-
 export default productSlice.reducer;

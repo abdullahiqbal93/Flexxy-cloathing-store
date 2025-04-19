@@ -1,5 +1,5 @@
+import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const initialState = {
   approvalURL: null,
@@ -9,54 +9,90 @@ const initialState = {
   orderDetails: null,
 };
 
-export const createNewOrder = createAsyncThunk('/order/createNewOrder',
-  async (orderData) => {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/add-order`, orderData);
-    return response.data;
+export const createNewOrder = createAsyncThunk(
+  "/order/createNewOrder",
+  async (orderData, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.post(`/add-order`, orderData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Order creation failed");
+    }
   }
 );
 
-export const capturePayment = createAsyncThunk('/order/capturePayment',
-  async ({ paymentId, payerId, orderId }) => {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/capture`, { paymentId, payerId, orderId });
-    return response.data;
+export const capturePayment = createAsyncThunk(
+  "/order/capturePayment",
+  async ({ paymentId, payerId, orderId }, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.post(`/order/capture`, {
+        paymentId,
+        payerId,
+        orderId,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Payment capture failed");
+    }
   }
 );
 
 export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
-  async (userId) => {
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order?userId=${userId}`);
-    return response.data.data.filter(order => !order.deletedFor?.user);
+  async (userId, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.get(`/order?userId=${userId}`);
+      return response.data.data.filter(order => !order.deletedFor?.user);
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Fetching orders failed");
+    }
   }
 );
 
 export const getOrderDetails = createAsyncThunk(
   "/order/getOrderDetails",
-  async (id) => {
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/${id}`);
-    return response.data;
+  async (id, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.get(`/order/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Fetching order details failed");
+    }
   }
 );
 
 export const cancelOrder = createAsyncThunk(
-  '/order/cancelOrder',
-  async (id) => {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/cancel/${id}`);
-    return response.data;
+  "/order/cancelOrder",
+  async (id, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.post(`/order/cancel/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Cancelling order failed");
+    }
   }
 );
 
 export const deleteOrderForUser = createAsyncThunk(
-  '/order/deleteOrderForUser',
-  async (id) => {
-    const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/order/delete/${id}`);
-    return response.data;
+  "/order/deleteOrderForUser",
+  async (id, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.put(`/order/delete/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Deleting order failed");
+    }
   }
 );
 
 const orderSlice = createSlice({
-  name: 'orderSlice',
+  name: "orderSlice",
   initialState,
   reducers: {
     resetOrderDetails: (state) => {

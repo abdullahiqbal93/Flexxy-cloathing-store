@@ -1,6 +1,6 @@
 import { getAxiosWithToken } from "@/lib/axios/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+
 
 export const initialState = {
   userList: [],
@@ -10,43 +10,24 @@ export const initialState = {
 export const fetchAllUsers = createAsyncThunk(
   "/user/fetchAllUsers",
   async () => {
-    const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user`, {
-      withCredentials: true,
-    });
-
+    const axiosInstance = await getAxiosWithToken();
+    const result = await axiosInstance.get(`/user`);
     return result?.data;
   }
 );
 
 export const registerUser = createAsyncThunk(
   "/user/adminRegister",
-
-  async (formData) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
-
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.post(`/user`, formData);
       return response.data;
     } catch (error) {
-      return error.response?.data || { message: "Something went wrong" };
+      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
     }
   }
 );
-
-// export const fetchUserById = createAsyncThunk(
-//   "/user/fetchUserById",
-//   async (id) => {
-//     const result = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
-//       withCredentials: true,
-//     });
-//     return result?.data;
-//   }
-// );
 
 export const fetchUserById = createAsyncThunk(
   "/user/fetchUserById",
@@ -59,36 +40,39 @@ export const fetchUserById = createAsyncThunk(
 
 export const editUser = createAsyncThunk(
   "/user/editUser",
-  async ({ id, formData }) => {
-    const result = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`,
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
-
-    return result?.data;
+  async ({ id, formData }, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.put(`/user/${id}`, formData);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Update failed" });
+    }
   }
 );
 
-export const deleteUser = createAsyncThunk("/user/deleteUser", async (id) => {
-  const result = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/${id}`, {
-    withCredentials: true,
-  });
-
-  return result?.data;
-});
+export const deleteUser = createAsyncThunk(
+  "/user/deleteUser",
+  async (id, { rejectWithValue }) => {
+    try {
+      const axiosInstance = await getAxiosWithToken();
+      const result = await axiosInstance.delete(`/user/${id}`);
+      return result?.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Delete failed" });
+    }
+  }
+);
 
 export const changeUserPassword = createAsyncThunk(
   "user/changePassword",
   async ({ currentPassword, newPassword }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/change-password`,
-        { currentPassword, newPassword },
-        { withCredentials: true }
-      );
+      const axiosInstance = await getAxiosWithToken();
+      const response = await axiosInstance.put(`/user/change-password`, {
+        currentPassword,
+        newPassword,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -111,17 +95,17 @@ export const adminUserSlice = createSlice({
         state.isLoading = false;
         state.userList = action.payload.data;
       })
-      .addCase(fetchAllUsers.rejected, (state, action) => {
+      .addCase(fetchAllUsers.rejected, (state) => {
         state.isLoading = false;
         state.userList = [];
       })
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(registerUser.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(changeUserPassword.pending, (state) => {
@@ -130,7 +114,7 @@ export const adminUserSlice = createSlice({
       .addCase(changeUserPassword.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addCase(changeUserPassword.rejected, (state, action) => {
+      .addCase(changeUserPassword.rejected, (state) => {
         state.isLoading = false;
       });
   },
