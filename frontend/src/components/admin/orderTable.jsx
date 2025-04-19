@@ -64,13 +64,8 @@ const OrderTable = ({ orders, handleUpdateStatus, handleDeleteOrder, handleSoftD
             ) : (
               orders.map((order) => (
                 <React.Fragment key={order._id}>
-                  <tr className={`hover:bg-gray-50 transition-colors${order.deletedFor?.admin ? ' bg-red-100 opacity-70' : ''}`}>
-                    <td className="px-6 py-4 text-sm text-gray-900 w-[150px] flex items-center gap-2">
-                      {order._id}
-                      {order.deletedFor?.admin && (
-                        <span className="ml-2 px-2 py-0.5 rounded bg-red-200 text-red-800 text-xs font-semibold">Deleted</span>
-                      )}
-                    </td>
+                  <tr className={`hover:bg-gray-50 transition-colors${order.deletedFor?.admin ? ' bg-red-200' : ''}`}>
+                    <td className="px-6 py-4 text-sm text-gray-900 w-[150px]">{order._id}</td>
                     <td className="px-6 py-4 text-sm text-gray-900 w-[120px]">{order.userId || 'Unknown'}</td>
                     <td className="px-6 py-4 text-sm text-gray-900 w-[150px]">{order.user?.name || 'Unknown'}</td>
                     <td className="px-6 py-4 text-sm text-gray-900 w-[200px]">{order.user?.email || 'Unknown'}</td>
