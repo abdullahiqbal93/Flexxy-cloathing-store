@@ -12,7 +12,7 @@ function ProfileSidebar({ activeTab, setActiveTab, user }) {
         dispatch(invalidateUser());
         sessionStorage.clear();
         toast.success('You have successfully logged out');
-        navigate('/shop/home');
+        navigate('/login');
   };
 
   const navItems = [

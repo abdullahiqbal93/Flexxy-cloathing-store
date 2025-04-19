@@ -117,6 +117,14 @@ const AuthPage = () => {
                             Forgot your password?
                         </Link>
                     )}
+                    <div className="mt-4">
+                        <Link 
+                            to="/" 
+                            className="text-blue-600 hover:text-blue-900 hover:underline font-medium"
+                        >
+                            Go to Home
+                        </Link>
+                    </div>
                 </div>
                 
                 <div className="mt-6 text-center text-xs text-gray-500 space-x-4">
