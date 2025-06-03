@@ -83,15 +83,12 @@ function ProductDetailPage() {
       toast.error("Please login to add items to cart");
       return;
     }
-    
-    if (hasVariants) {
-      // Only validate size if the product has size variants
-      if (availableSizes.length > 0 && !size) {
+      if (hasVariants) {
+      if (hasSizeVariants && !size) {
         toast.error("Please select a size");
         return;
       }
-      // Only validate color if the product has color variants
-      if (availableColors.length > 0 && !color) {
+      if (hasColorVariants && !color) {
         toast.error("Please select a color");
         return;
       }
@@ -153,10 +150,11 @@ function ProductDetailPage() {
     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500">
       </div>
     </div>;
-  if (!productData) return <div className="opacity-0"></div>;
-  const availableVariants = hasVariants ? productData.variants.filter((v) => v.stock > 0) : [];
-  const availableSizes = hasVariants ? [...new Set(availableVariants.filter((v) => v.size && (!color || v.color === color)).map((v) => v.size))] : [];
-  const availableColors = hasVariants ? [...new Set(availableVariants.filter((v) => v.color && (!size || v.size === size)).map((v) => v.color))] : [];
+  if (!productData) return <div className="opacity-0"></div>;  const availableVariants = hasVariants ? productData.variants.filter((v) => v.stock > 0) : [];
+  const hasSizeVariants = hasVariants && availableVariants.some(v => v.size);
+  const hasColorVariants = hasVariants && availableVariants.some(v => v.color);
+  const availableSizes = hasSizeVariants ? [...new Set(availableVariants.filter((v) => v.size && (!color || v.color === color)).map((v) => v.size))] : [];
+  const availableColors = hasColorVariants ? [...new Set(availableVariants.filter((v) => v.color && (!size || v.size === size)).map((v) => v.color))] : [];
   const getVariantStock = (size, color) => {
     if (!productData.variants || productData.variants.length === 0) {
       return productData.totalStock || 0;
