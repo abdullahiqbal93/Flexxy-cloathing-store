@@ -78,22 +78,25 @@ function ProductDetailPage() {
   };
 
   const hasVariants = productData && productData.variants && productData.variants.length > 0;
-
   const handleAddToCart = () => {
     if (!user) {
       toast.error("Please login to add items to cart");
       return;
     }
+    
     if (hasVariants) {
-      if (availableSizes.length && !size) {
+      // Only validate size if the product has size variants
+      if (availableSizes.length > 0 && !size) {
         toast.error("Please select a size");
         return;
       }
-      if (availableColors.length && !color) {
+      // Only validate color if the product has color variants
+      if (availableColors.length > 0 && !color) {
         toast.error("Please select a color");
         return;
       }
     }
+
     if (productData.variants && productData.variants.length > 0) {
       const variant = productData.variants.find((v) => 
         (!size || v.size === size) && (!color || v.color === color)
@@ -104,7 +107,10 @@ function ProductDetailPage() {
       }
 
       const currentCartItem = cartItems.items?.find(
-        (item) => item.productId === productId && item.size === size && item.color === color
+        (item) => 
+          item.productId === productId && 
+          (availableSizes.length === 0 || item.size === size) && 
+          (availableColors.length === 0 || item.color === color)
       );
       const totalQuantity = (currentCartItem?.quantity || 0) + quantity;
 
@@ -113,12 +119,16 @@ function ProductDetailPage() {
         return;
       }
     }
+
     dispatch(
       addToCart({
         userId: user.id,
         productId: productData._id,
         quantity,
-        ...(hasVariants && { size, color }),
+        ...(hasVariants && {
+          ...(availableSizes.length > 0 ? { size } : {}),
+          ...(availableColors.length > 0 ? { color } : {})
+        }),
       })
     )
       .then((response) => {
