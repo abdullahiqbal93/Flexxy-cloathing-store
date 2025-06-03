@@ -83,7 +83,7 @@ function ProductDetailPage() {
       toast.error("Please login to add items to cart");
       return;
     }
-      if (hasVariants) {
+    if (hasVariants) {
       if (hasSizeVariants && !size) {
         toast.error("Please select a size");
         return;
@@ -95,7 +95,7 @@ function ProductDetailPage() {
     }
 
     if (productData.variants && productData.variants.length > 0) {
-      const variant = productData.variants.find((v) => 
+      const variant = productData.variants.find((v) =>
         (!size || v.size === size) && (!color || v.color === color)
       );
       if (!variant || variant.stock === 0) {
@@ -104,9 +104,9 @@ function ProductDetailPage() {
       }
 
       const currentCartItem = cartItems.items?.find(
-        (item) => 
-          item.productId === productId && 
-          (availableSizes.length === 0 || item.size === size) && 
+        (item) =>
+          item.productId === productId &&
+          (availableSizes.length === 0 || item.size === size) &&
           (availableColors.length === 0 || item.color === color)
       );
       const totalQuantity = (currentCartItem?.quantity || 0) + quantity;
@@ -148,9 +148,9 @@ function ProductDetailPage() {
 
   if (loading) return <div className="min-h-screen flex items-center justify-center">
     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500">
-      </div>
-    </div>;
-  if (!productData) return <div className="opacity-0"></div>;  const availableVariants = hasVariants ? productData.variants.filter((v) => v.stock > 0) : [];
+    </div>
+  </div>;
+  if (!productData) return <div className="opacity-0"></div>; const availableVariants = hasVariants ? productData.variants.filter((v) => v.stock > 0) : [];
   const hasSizeVariants = hasVariants && availableVariants.some(v => v.size);
   const hasColorVariants = hasVariants && availableVariants.some(v => v.color);
   const availableSizes = hasSizeVariants ? [...new Set(availableVariants.filter((v) => v.size && (!color || v.color === color)).map((v) => v.size))] : [];
@@ -159,16 +159,16 @@ function ProductDetailPage() {
     if (!productData.variants || productData.variants.length === 0) {
       return productData.totalStock || 0;
     }
-    const variant = productData.variants.find((v) => 
+    const variant = productData.variants.find((v) =>
       (!size || v.size === size) && (!color || v.color === color)
     );
     return variant ? variant.stock : 0;
-  };  const isVariantAvailable = (checkSize, checkColor) => {
+  }; const isVariantAvailable = (checkSize, checkColor) => {
     if (!productData.variants || productData.variants.length === 0) {
       return productData.totalStock > 0;
     }
-    return availableVariants.some((v) => 
-      (!hasSizeVariants || !checkSize || v.size === checkSize) && 
+    return availableVariants.some((v) =>
+      (!hasSizeVariants || !checkSize || v.size === checkSize) &&
       (!hasColorVariants || !checkColor || v.color === checkColor)
     ) && (!hasSizeVariants || checkSize) && (!hasColorVariants || checkColor);
   };
@@ -299,9 +299,10 @@ function ProductDetailPage() {
                       {activeTab === "size" && (
                         <div className="space-y-3">
                           <div className="text-sm text-gray-500 mb-2">Select your size from the options below</div>
-                          <div className="flex flex-wrap gap-2">                            {availableSizes.map((sizeOption) => {
+                          <div className="flex flex-wrap gap-2">
+                            {availableSizes.map((sizeOption) => {
                               const isSelected = size === sizeOption;
-                              const hasVariants = hasColorVariants 
+                              const hasVariants = hasColorVariants
                                 ? availableColors.some((c) => isVariantAvailable(sizeOption, c))
                                 : availableVariants.some(v => v.size === sizeOption && v.stock > 0);
                               return (
@@ -319,7 +320,8 @@ function ProductDetailPage() {
                                 </button>
                               );
                             })}
-                          </div>                          {hasColorVariants && (
+                          </div>
+                          {hasColorVariants && (
                             <div className="text-sm mt-3">
                               {size ? (
                                 <button onClick={() => setActiveTab("color")} className="text-amber-500 font-medium underline">
@@ -336,27 +338,28 @@ function ProductDetailPage() {
                         <div className="space-y-3">
                           <div className="text-sm text-gray-500 mb-2">Select your preferred color</div>
                           <div className="flex flex-wrap gap-2">                            {availableColors.map((colorOption) => {
-                              const isSelected = color === colorOption;
-                              const hasVariants = hasSizeVariants 
-                                ? availableSizes.some((s) => isVariantAvailable(s, colorOption))
-                                : availableVariants.some(v => v.color === colorOption && v.stock > 0);
-                              const displayColor = colorOption.charAt(0).toUpperCase() + colorOption.slice(1).toLowerCase();
-                              return (
-                                <button
-                                  key={colorOption}
-                                  onClick={() => handleColorSelect(colorOption)}
-                                  disabled={!hasVariants}
-                                  className={`
+                            const isSelected = color === colorOption;
+                            const hasVariants = hasSizeVariants
+                              ? availableSizes.some((s) => isVariantAvailable(s, colorOption))
+                              : availableVariants.some(v => v.color === colorOption && v.stock > 0);
+                            const displayColor = colorOption.charAt(0).toUpperCase() + colorOption.slice(1).toLowerCase();
+                            return (
+                              <button
+                                key={colorOption}
+                                onClick={() => handleColorSelect(colorOption)}
+                                disabled={!hasVariants}
+                                className={`
                                     py-2 px-4 border rounded text-sm transition-all duration-200
                                     ${isSelected ? "border-amber-500 bg-amber-500 text-white" : "border-gray-300"}
                                     ${!hasVariants ? "opacity-40 cursor-not-allowed" : "hover:border-amber-500"}
                                   `}
-                                >
-                                  {displayColor}
-                                </button>
-                              );
-                            })}
-                          </div>                      {hasSizeVariants && !size && (
+                              >
+                                {displayColor}
+                              </button>
+                            );
+                          })}
+                          </div>
+                          {hasSizeVariants && !size && (
                             <div className="text-sm mt-3">
                               <button onClick={() => setActiveTab("size")} className="text-amber-500 font-medium underline">
                                 ← Go back to select size
@@ -373,38 +376,39 @@ function ProductDetailPage() {
                           <span>Only {getVariantStock(size, color)} left in stock</span>
                         </div>
                       )}
-                    </>                  )}                  {(hasVariants ? 
-                    ((!hasSizeVariants || size) && (!hasColorVariants || color) && isVariantAvailable(size, color)) 
-                    : true) && (
-                    <div className="flex items-center gap-4 mt-4">
-                      <div className="flex items-center bg-gray-100 rounded-full">
-                        <button
-                          onClick={() => handleQuantityChange(-1)}
-                          className="px-4 py-2 hover:bg-gray-200 rounded-l-full text-gray-800"
-                          aria-label="Decrease quantity"
-                        >
-                          −
-                        </button>
-                        <span className="px-4 py-2 min-w-10 text-center">{quantity}</span>
-                        <button
-                          onClick={() => handleQuantityChange(1)}
-                          className="px-4 py-2 hover:bg-gray-200 rounded-r-full text-gray-800"
-                          aria-label="Increase quantity"
-                        >
-                          +
-                        </button>
-                      </div>
-                      <button
-                        onClick={handleAddToCart}
-                        className="flex-1 bg-amber-500 text-white py-3 rounded-full font-semibold hover:bg-amber-600 transition-all duration-200 flex items-center justify-center gap-2"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        Add to Cart {quantity > 1 && `(${quantity})`}
-                      </button>
-                    </div>
-                  )}
+                    </>)}
+                    {(hasVariants ?
+                      ((!hasSizeVariants || size) && (!hasColorVariants || color) && isVariantAvailable(size, color))
+                      : true) && (
+                        <div className="flex items-center gap-4 mt-4">
+                          <div className="flex items-center bg-gray-100 rounded-full">
+                            <button
+                              onClick={() => handleQuantityChange(-1)}
+                              className="px-4 py-2 hover:bg-gray-200 rounded-l-full text-gray-800"
+                              aria-label="Decrease quantity"
+                            >
+                              −
+                            </button>
+                            <span className="px-4 py-2 min-w-10 text-center">{quantity}</span>
+                            <button
+                              onClick={() => handleQuantityChange(1)}
+                              className="px-4 py-2 hover:bg-gray-200 rounded-r-full text-gray-800"
+                              aria-label="Increase quantity"
+                            >
+                              +
+                            </button>
+                          </div>
+                          <button
+                            onClick={handleAddToCart}
+                            className="flex-1 bg-amber-500 text-white py-3 rounded-full font-semibold hover:bg-amber-600 transition-all duration-200 flex items-center justify-center gap-2"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            Add to Cart {quantity > 1 && `(${quantity})`}
+                          </button>
+                        </div>
+                      )}
                 </div>
                 <ul className="mt-6 text-sm text-gray-600 space-y-2">
                   <li className="flex items-center gap-2">
