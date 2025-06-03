@@ -163,15 +163,14 @@ function ProductDetailPage() {
       (!size || v.size === size) && (!color || v.color === color)
     );
     return variant ? variant.stock : 0;
-  };
-
-  const isVariantAvailable = (checkSize, checkColor) => {
+  };  const isVariantAvailable = (checkSize, checkColor) => {
     if (!productData.variants || productData.variants.length === 0) {
       return productData.totalStock > 0;
     }
     return availableVariants.some((v) => 
-      (!checkSize || v.size === checkSize) && (!color || v.color === checkColor)
-    );
+      (!hasSizeVariants || !checkSize || v.size === checkSize) && 
+      (!hasColorVariants || !checkColor || v.color === checkColor)
+    ) && (!hasSizeVariants || checkSize) && (!hasColorVariants || checkColor);
   };
 
   const handleQuantityChange = (amount) => {
@@ -277,21 +276,26 @@ function ProductDetailPage() {
                             Reset all
                           </button>
                         )}
-                      </div>
-                      <div className="flex border-b mb-4">
-                        <button
-                          className={`py-2 px-4 font-medium text-sm ${activeTab === "size" ? "border-b-2 border-amber-500 text-amber-500" : "text-gray-500"}`}
-                          onClick={() => setActiveTab("size")}
-                        >
-                          Select Size
-                        </button>
-                        <button
-                          className={`py-2 px-4 font-medium text-sm ${activeTab === "color" ? "border-b-2 border-amber-500 text-amber-500" : "text-gray-500"}`}
-                          onClick={() => setActiveTab("color")}
-                        >
-                          Select Color
-                        </button>
-                      </div>
+                      </div>                      {(hasSizeVariants || hasColorVariants) && (
+                        <div className="flex border-b mb-4">
+                          {hasSizeVariants && (
+                            <button
+                              className={`py-2 px-4 font-medium text-sm ${activeTab === "size" ? "border-b-2 border-amber-500 text-amber-500" : "text-gray-500"}`}
+                              onClick={() => setActiveTab("size")}
+                            >
+                              Select Size
+                            </button>
+                          )}
+                          {hasColorVariants && (
+                            <button
+                              className={`py-2 px-4 font-medium text-sm ${activeTab === "color" ? "border-b-2 border-amber-500 text-amber-500" : "text-gray-500"}`}
+                              onClick={() => setActiveTab("color")}
+                            >
+                              Select Color
+                            </button>
+                          )}
+                        </div>
+                      )}
                       {activeTab === "size" && (
                         <div className="space-y-3">
                           <div className="text-sm text-gray-500 mb-2">Select your size from the options below</div>
@@ -314,16 +318,17 @@ function ProductDetailPage() {
                                 </button>
                               );
                             })}
-                          </div>
-                          <div className="text-sm mt-3">
-                            {size ? (
-                              <button onClick={() => setActiveTab("color")} className="text-amber-500 font-medium underline">
-                                Continue to select color →
-                              </button>
-                            ) : (
-                              <span className="text-gray-500">Please select a size to continue</span>
-                            )}
-                          </div>
+                          </div>                          {hasColorVariants && (
+                            <div className="text-sm mt-3">
+                              {size ? (
+                                <button onClick={() => setActiveTab("color")} className="text-amber-500 font-medium underline">
+                                  Continue to select color →
+                                </button>
+                              ) : (
+                                <span className="text-gray-500">Please select a size to continue</span>
+                              )}
+                            </div>
+                          )}
                         </div>
                       )}
                       {activeTab === "color" && (
@@ -349,8 +354,7 @@ function ProductDetailPage() {
                                 </button>
                               );
                             })}
-                          </div>
-                          {!size && (
+                          </div>                      {hasSizeVariants && !size && (
                             <div className="text-sm mt-3">
                               <button onClick={() => setActiveTab("size")} className="text-amber-500 font-medium underline">
                                 ← Go back to select size
@@ -367,9 +371,8 @@ function ProductDetailPage() {
                           <span>Only {getVariantStock(size, color)} left in stock</span>
                         </div>
                       )}
-                    </>                  )}
-                  {(hasVariants ? 
-                    ((!availableSizes.length || size) && (!availableColors.length || color) && isVariantAvailable(size, color)) 
+                    </>                  )}                  {(hasVariants ? 
+                    ((!hasSizeVariants || size) && (!hasColorVariants || color) && isVariantAvailable(size, color)) 
                     : true) && (
                     <div className="flex items-center gap-4 mt-4">
                       <div className="flex items-center bg-gray-100 rounded-full">
