@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { addNewProduct, editProduct, fetchAllProducts } from '@/lib/store/features/product/productSlice';
+import { addNewProduct, editProduct, fetchAllProducts, generateAIDescription } from '@/lib/store/features/product/productSlice';
 import ImageUploader from '@/components/admin/imageUploader';
 import VariantSelector from '@/components/admin/variantSelector';
 import { categoryList } from '@/config';
