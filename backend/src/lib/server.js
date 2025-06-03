@@ -10,7 +10,12 @@ import express from 'express';
 import helmet from 'helmet';
 import { StatusCodes } from 'http-status-codes';
 import morgan from 'morgan';
+import { OpenAI } from "openai";
 // import { loginRateLimiter } from './middlewares/user-middleware';
+
+
+
+export const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
 morgan.token("body", (req) => {
   try {
