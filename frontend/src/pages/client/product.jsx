@@ -299,10 +299,11 @@ function ProductDetailPage() {
                       {activeTab === "size" && (
                         <div className="space-y-3">
                           <div className="text-sm text-gray-500 mb-2">Select your size from the options below</div>
-                          <div className="flex flex-wrap gap-2">
-                            {availableSizes.map((sizeOption) => {
+                          <div className="flex flex-wrap gap-2">                            {availableSizes.map((sizeOption) => {
                               const isSelected = size === sizeOption;
-                              const hasVariants = availableColors.some((c) => isVariantAvailable(sizeOption, c));
+                              const hasVariants = hasColorVariants 
+                                ? availableColors.some((c) => isVariantAvailable(sizeOption, c))
+                                : availableVariants.some(v => v.size === sizeOption && v.stock > 0);
                               return (
                                 <button
                                   key={sizeOption}
@@ -334,10 +335,11 @@ function ProductDetailPage() {
                       {activeTab === "color" && (
                         <div className="space-y-3">
                           <div className="text-sm text-gray-500 mb-2">Select your preferred color</div>
-                          <div className="flex flex-wrap gap-2">
-                            {availableColors.map((colorOption) => {
+                          <div className="flex flex-wrap gap-2">                            {availableColors.map((colorOption) => {
                               const isSelected = color === colorOption;
-                              const hasVariants = availableSizes.some((s) => isVariantAvailable(s, colorOption));
+                              const hasVariants = hasSizeVariants 
+                                ? availableSizes.some((s) => isVariantAvailable(s, colorOption))
+                                : availableVariants.some(v => v.color === colorOption && v.stock > 0);
                               const displayColor = colorOption.charAt(0).toUpperCase() + colorOption.slice(1).toLowerCase();
                               return (
                                 <button
