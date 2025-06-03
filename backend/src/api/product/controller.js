@@ -7,7 +7,7 @@ import { createSuccessResponse } from "../../lib/services/success.js";
 import { handleError } from "../../lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
 import { imageUploadUtil } from "../../lib/utils/cloudinary.js";
-import { openai } from "../../lib/server.js";
+import { generateText } from "../../lib/utils/huggingface.js";
 
 export const createProduct = async (req, res) => {
   try {
@@ -334,14 +334,7 @@ export const generateProductDescription = async (req, res) => {
 
         const prompt = `Write a compelling and detailed product description for an ${category || ''} product named "${name}"${brand ? ` by ${brand}` : ''}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
 
-        const completion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: prompt }],
-            temperature: 0.7,
-            max_tokens: 200,
-        });
-
-        const generatedDescription = completion.choices[0].message.content.trim();
+        const generatedDescription = await generateText(prompt);
         createSuccessResponse(res, { description: generatedDescription }, StatusCodes.OK);
     } catch (error) {
         console.error('AI Description Generation Error:', error);
