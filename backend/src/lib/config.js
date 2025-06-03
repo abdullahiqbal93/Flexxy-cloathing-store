@@ -23,6 +23,7 @@ export const env = {
   SMTP_USER: process.env.SMTP_USER,
   SMTP_PASSWORD: process.env.SMTP_PASSWORD,
   EMAIL_FROM: process.env.EMAIL_FROM,
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 };
 
 export const SWAGGER_PATH = "docs";

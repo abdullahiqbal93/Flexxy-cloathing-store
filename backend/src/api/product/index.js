@@ -1,4 +1,4 @@
-import { addReview, createProduct, deleteProduct, deleteReview, getBrands, getFilteredProducts, getProduct, getProductById, handleImageUpload, updateProduct, updateReview } from "./controller.js";
+import { addReview, createProduct, deleteProduct, deleteReview, generateProductDescription, getBrands, getFilteredProducts, getProduct, getProductById, handleImageUpload, updateProduct, updateReview } from "./controller.js";
 import { insertProductSchema, updateProductSchema } from "./schema/index.js";
 import { validateRequestBody, validateRequestParams } from "../../lib/middlewares/validate.js";
 import { getByIDSchemaParams } from "../../lib/shared-schema/index.js";
@@ -37,8 +37,9 @@ export const product = (router) => {
     router.post("/product/:productId/review", addReview);
 
     router.put("/product/:productId/review/:reviewId", updateReview);
-    
-    router.delete("/product/:productId/review/:reviewId", deleteReview);
+      router.delete("/product/:productId/review/:reviewId", deleteReview);
+
+    router.post("/product/generate-description", generateProductDescription);
 
     return router;
 };

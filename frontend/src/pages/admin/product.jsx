@@ -203,13 +203,43 @@ function AdminProductPage() {
                   disabled={loading}
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium mb-1 sm:mb-2 text-gray-700"
-                >
-                  Product Description
-                </label>
+              <div>                <div className="flex justify-between items-center mb-1 sm:mb-2">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Product Description
+                  </label>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!name) {
+                        toast.error("Please enter a product name first");
+                        return;
+                      }
+                      try {
+                        setLoading(true);
+                        const result = await dispatch(generateAIDescription({
+                          name,
+                          category,
+                          brand
+                        })).unwrap();
+                        if (result.success) {
+                          setDescription(result.data.description);
+                          toast.success("AI description generated successfully");
+                        }
+                      } catch (error) {
+                        toast.error(error.message || "Failed to generate description");
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                    className="text-sm px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={loading}
+                  >
+                    Generate AI Description
+                  </button>
+                </div>
                 <textarea
                   id="description"
                   required

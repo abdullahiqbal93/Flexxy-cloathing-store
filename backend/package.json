@@ -34,6 +34,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
+    "openai": "^5.0.2",
     "paypal-rest-sdk": "^1.8.1",
     "swagger-ui-express": "^5.0.1",
     "testcontainers": "^10.17.2",

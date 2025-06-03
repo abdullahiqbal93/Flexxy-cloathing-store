@@ -7,6 +7,7 @@ import { createSuccessResponse } from "../../lib/services/success.js";
 import { handleError } from "../../lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
 import { imageUploadUtil } from "../../lib/utils/cloudinary.js";
+import { openai } from "../../lib/server.js";
 
 export const createProduct = async (req, res) => {
   try {
@@ -321,4 +322,33 @@ export const deleteReview = async (req, res) => {
   } catch (e) {
     createErrorResponse(res, handleError(e), StatusCodes.INTERNAL_SERVER_ERROR);
   }
+};
+
+export const generateProductDescription = async (req, res) => {
+    try {
+        const { name, category, brand } = req.body;
+        
+        if (!name) {
+            return createErrorResponse(res, "Product name is required", StatusCodes.BAD_REQUEST);
+        }
+
+        const prompt = `Write a compelling and detailed product description for an ${category || ''} product named "${name}"${brand ? ` by ${brand}` : ''}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
+            max_tokens: 200,
+        });
+
+        const generatedDescription = completion.choices[0].message.content.trim();
+        createSuccessResponse(res, { description: generatedDescription }, StatusCodes.OK);
+    } catch (error) {
+        console.error('AI Description Generation Error:', error);
+        createErrorResponse(
+            res,
+            error.message || "Failed to generate description",
+            StatusCodes.INTERNAL_SERVER_ERROR
+        );
+    }
 };

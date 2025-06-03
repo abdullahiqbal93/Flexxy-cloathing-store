@@ -9,6 +9,7 @@ const initialState = {
   brands: [],
   reviewsByProduct: {},
   averageRatings: {},
+  isGeneratingDescription: false,
 };
 
 export const addNewProduct = createAsyncThunk(
@@ -17,6 +18,17 @@ export const addNewProduct = createAsyncThunk(
     const result = await axios.post(
       `${import.meta.env.VITE_API_BASE_URL}/api/v1/product`,
       formData
+    );
+    return result?.data;
+  }
+);
+
+export const generateAIDescription = createAsyncThunk(
+  "/product/generateDescription",
+  async (data) => {
+    const result = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/generate-description`,
+      data
     );
     return result?.data;
   }
@@ -241,9 +253,17 @@ const productSlice = createSlice({
             updateAverageRating(state, action.payload.productId);
           }
         }
-      })
-      .addCase(deleteReview.rejected, (state) => {
+      })      .addCase(deleteReview.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(generateAIDescription.pending, (state) => {
+        state.isGeneratingDescription = true;
+      })
+      .addCase(generateAIDescription.fulfilled, (state) => {
+        state.isGeneratingDescription = false;
+      })
+      .addCase(generateAIDescription.rejected, (state) => {
+        state.isGeneratingDescription = false;
       });
   },
 });
