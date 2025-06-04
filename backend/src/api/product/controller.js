@@ -7,7 +7,7 @@ import { createSuccessResponse } from "../../lib/services/success.js";
 import { handleError } from "../../lib/utils/error-handle.js";
 import { StatusCodes } from "http-status-codes";
 import { imageUploadUtil } from "../../lib/utils/cloudinary.js";
-import { generateText } from "../../lib/utils/huggingface.js";
+import { generateText } from "../../lib/utils/text-cortex.js";
 
 export const createProduct = async (req, res) => {
   try {

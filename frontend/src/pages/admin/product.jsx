@@ -173,6 +173,32 @@ function AdminProductPage() {
     }
   };
 
+  const handleGenerateDescription = async () => {
+    if (!name) {
+      toast.error('Please enter a product name first');
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      const result = await dispatch(generateAIDescription({ 
+        name, 
+        category, 
+        brand 
+      })).unwrap();
+      
+      if (result?.success) {
+        setDescription(result.description);
+        toast.success('Description generated successfully');
+      }
+    } catch (error) {
+      console.error('AI Description Error:', error);
+      toast.error(error?.response?.data?.message || error.message || "Failed to generate description");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6">
@@ -203,53 +229,30 @@ function AdminProductPage() {
                   disabled={loading}
                 />
               </div>
-              <div>                <div className="flex justify-between items-center mb-1 sm:mb-2">
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Product Description
-                  </label>
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium mb-1 sm:mb-2 text-gray-700">
+                  Product Description
+                </label>
+                <div className="relative">
+                  <textarea
+                    id="description"
+                    required
+                    rows="4"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter detailed product description"
+                    onChange={(e) => setDescription(e.target.value)}
+                    value={description}
+                    disabled={loading}
+                  />
                   <button
                     type="button"
-                    onClick={async () => {
-                      if (!name) {
-                        toast.error("Please enter a product name first");
-                        return;
-                      }
-                      try {
-                        setLoading(true);
-                        const result = await dispatch(generateAIDescription({
-                          name,
-                          category,
-                          brand
-                        })).unwrap();
-                        if (result.success) {
-                          setDescription(result.data.description);
-                          toast.success("AI description generated successfully");
-                        }
-                      } catch (error) {
-                        toast.error(error.message || "Failed to generate description");
-                      } finally {
-                        setLoading(false);
-                      }
-                    }}
-                    className="text-sm px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={loading}
+                    onClick={handleGenerateDescription}
+                    disabled={loading || !name}
+                    className="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 py-1 rounded-md text-sm"
                   >
-                    Generate AI Description
+                    {loading ? 'Generating...' : 'Generate AI Description'}
                   </button>
                 </div>
-                <textarea
-                  id="description"
-                  required
-                  rows="4"
-                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter detailed product description"
-                  onChange={(e) => setDescription(e.target.value)}
-                  value={description}
-                  disabled={loading}
-                />
               </div>
               <div>
                 <label htmlFor="isActive" className="block text-sm font-medium mb-1 sm:mb-2 text-gray-700">
