@@ -5,6 +5,11 @@ const API_URL = "https://api.textcortex.com/v1/texts/descriptions";
 
 export const generateText = async (prompt) => {
     try {
+        if (!env.TEXT_CORTEX_API_KEY) {
+            throw new Error("TEXT_CORTEX_API_KEY is not configured");
+        }
+
+        const apiKey = env.TEXT_CORTEX_API_KEY.trim();
         const response = await axios.post(API_URL, {
             max_tokens: 200,
             model: "gemini-2-0-flash",
@@ -14,7 +19,7 @@ export const generateText = async (prompt) => {
         }, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${env.TEXT_CORTEX_API_KEY}`
+                "Authorization": `Bearer ${apiKey}`
             }
         });
 
