@@ -11,11 +11,18 @@ export const generateText = async (prompt) => {
 
         const apiKey = env.TEXT_CORTEX_API_KEY.trim();
         const response = await axios.post(API_URL, {
-            max_tokens: 200,
+            source_lang: "en",
+            target_lang: "en",
+            name: "Product Description",
             model: "gemini-2-0-flash",
+            max_tokens: 2048,
             n: 1,
-            temperature: null,
-            text: prompt
+            temperature: 0.7,
+            description: prompt,
+            formality: "default",
+            keywords: ["product", "description"],
+            brand: "",
+            category: ""
         }, {
             headers: {
                 "Content-Type": "application/json",
