@@ -178,13 +178,15 @@ function AdminProductPage() {
   const getDefaultPrompt = () => {
     return `Write a compelling and detailed product description for a {category} product named "{name}"{brand}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
   };
-
   const handleGenerateDescription = () => {
     if (!name) {
       toast.error('Please enter a product name first');
       return;
     }
-    setCustomPrompt(getDefaultPrompt());
+    
+    const defaultPrompt = getDefaultPrompt();
+    setCustomPrompt(defaultPrompt);
+    setPrompt(defaultPrompt);
     setIsPromptModalOpen(true);
   };
 
@@ -423,15 +425,13 @@ function AdminProductPage() {
             </button>
           </div>
         </form>
-      </div>
-      <PromptModal
-        isOpen={isPromptModalOpen}
-        onClose={() => setIsPromptModalOpen(false)}
-        onConfirm={handleGenerateWithPrompt}
-        prompt={customPrompt}
-        setPrompt={setCustomPrompt}
-        loading={loading}
-      />
+      </div>        <PromptModal
+          isOpen={isPromptModalOpen}
+          onClose={() => setIsPromptModalOpen(false)}
+          onSubmit={handleGenerateWithPrompt}
+          defaultPrompt={customPrompt}
+          loading={loading}
+        />
     </div>
   );
 }

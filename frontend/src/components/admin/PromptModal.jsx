@@ -1,10 +1,10 @@
 import React from 'react';
 
 const PromptModal = ({ isOpen, onClose, onSubmit, defaultPrompt, loading }) => {
-  const [prompt, setPrompt] = React.useState('');
+  const [prompt, setPrompt] = React.useState(defaultPrompt || '');
 
   React.useEffect(() => {
-    if (isOpen) {
+    if (isOpen && defaultPrompt) {
       setPrompt(defaultPrompt);
     }
   }, [isOpen, defaultPrompt]);
