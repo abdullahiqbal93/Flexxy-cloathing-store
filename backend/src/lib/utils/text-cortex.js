@@ -30,6 +30,8 @@ export const generateText = async (prompt) => {
             }
         });
 
+        console.log('Text Generation Response:', response.data);
+
         const generatedText = response.data.data[0]?.text;
         if (!generatedText) {
             throw new Error("No description generated");
