@@ -326,13 +326,13 @@ export const deleteReview = async (req, res) => {
 
 export const generateProductDescription = async (req, res) => {
     try {
-        const { name, category, brand } = req.body;
+        const { name, category, brand, prompt: customPrompt } = req.body;
         
         if (!name) {
             return createErrorResponse(res, "Product name is required", StatusCodes.BAD_REQUEST);
         }
-
-        const prompt = `Write a compelling and detailed product description for an ${category || ''} product named "${name}"${brand ? ` by ${brand}` : ''}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
+        
+        const prompt = customPrompt || `Write a compelling and detailed product description for an ${category || ''} product named "${name}"${brand ? ` by ${brand}` : ''}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
 
         const generatedDescription = await generateText(prompt);
         createSuccessResponse(res, { description: generatedDescription }, StatusCodes.OK);

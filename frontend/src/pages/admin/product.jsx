@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { addNewProduct, editProduct, fetchAllProducts, generateAIDescription } from '@/lib/store/features/product/productSlice';
 import ImageUploader from '@/components/admin/imageUploader';
 import VariantSelector from '@/components/admin/variantSelector';
+import PromptModal from '@/components/admin/PromptModal';
 import { categoryList } from '@/config';
 
 function AdminProductPage() {
@@ -29,6 +30,8 @@ function AdminProductPage() {
   const [totalStock, setTotalStock] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isActive, setIsActive] = useState(true);
+  const [isPromptModalOpen, setIsPromptModalOpen] = useState(false);
+  const [customPrompt, setCustomPrompt] = useState('');
 
   const isEditMode = !!id;
 
@@ -173,18 +176,29 @@ function AdminProductPage() {
     }
   };
 
-  const handleGenerateDescription = async () => {
+  const getDefaultPrompt = () => {
+    return `Write a compelling and detailed product description for an ${category || ''} product named "${name}"${brand ? ` by ${brand}` : ''}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
+  };
+
+  const handleGenerateDescription = () => {
     if (!name) {
       toast.error('Please enter a product name first');
       return;
     }
+    setCustomPrompt(getDefaultPrompt());
+    setIsPromptModalOpen(true);
+  };
 
+  const handleGenerateWithPrompt = async (prompt) => {
     try {
       setLoading(true);
+      setIsPromptModalOpen(false);
+      
       const result = await dispatch(generateAIDescription({
         name,
         category,
-        brand
+        brand,
+        prompt
       })).unwrap();
 
       if (result?.success) {
@@ -239,8 +253,7 @@ function AdminProductPage() {
                   disabled={loading}
                 />
               </div>
-              <div>
-                <div className="flex justify-between items-center mb-1 sm:mb-2">
+              <div>                <div className="flex justify-between items-center mb-1 sm:mb-2">
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                   Product Description
                 </label>
@@ -250,7 +263,7 @@ function AdminProductPage() {
                   disabled={loading || !name}
                   className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 py-1 rounded-md text-sm"
                 >
-                  {loading ? 'Generating...' : 'Generate AI Description'}
+                  {loading ? 'Generating...' : 'Customize & Generate AI Description'}
                 </button>
               </div>
                 <div className="relative">
@@ -408,6 +421,14 @@ function AdminProductPage() {
           </div>
         </form>
       </div>
+      <PromptModal
+        isOpen={isPromptModalOpen}
+        onClose={() => setIsPromptModalOpen(false)}
+        onConfirm={handleGenerateWithPrompt}
+        prompt={customPrompt}
+        setPrompt={setCustomPrompt}
+        loading={loading}
+      />
     </div>
   );
 }
