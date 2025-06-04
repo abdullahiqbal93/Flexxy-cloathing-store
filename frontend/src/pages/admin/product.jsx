@@ -107,34 +107,34 @@ function AdminProductPage() {
     if (!isVariantValid) return 'Each variant must have at least one of size or color, and valid stock';
     return null;
   };
-  
-  
+
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
+
     const validationError = validateForm();
     if (validationError) {
       setLoading(false);
       toast.error(validationError);
       return;
     }
-  
+
     const formData = new FormData();
     const existingImages = Object.values(images).filter(
       (img) => img !== null && typeof img === 'string'
     );
-  
+
     if (isEditMode) {
       formData.append('existingImages', JSON.stringify(existingImages));
     }
-  
+
     Object.entries(images).forEach(([key, image]) => {
       if (image instanceof File) {
         formData.append('images', image);
       }
     });
-  
+
     formData.append('name', name);
     formData.append('description', description);
     formData.append('category', category);
@@ -143,13 +143,13 @@ function AdminProductPage() {
     formData.append('salePrice', salePrice);
     formData.append('totalStock', totalStock.toString());
     formData.append('isActive', isActive);
-  
+
     variants.forEach((variant, index) => {
       formData.append(`variants[${index}][size]`, variant.size);
       formData.append(`variants[${index}][color]`, variant.color);
       formData.append(`variants[${index}][stock]`, variant.stock.toString());
     });
-  
+
     try {
       let result;
       if (isEditMode) {
@@ -178,23 +178,23 @@ function AdminProductPage() {
       toast.error('Please enter a product name first');
       return;
     }
-    
+
     try {
       setLoading(true);
-      const result = await dispatch(generateAIDescription({ 
-        name, 
-        category, 
-        brand 
+      const result = await dispatch(generateAIDescription({
+        name,
+        category,
+        brand
       })).unwrap();
-      
+
       if (result?.success) {
         const description = result?.data?.description;
         if (description) {
           const cleanDescription = description
-            .replace(/\*\*/g, '')  
+            .replace(/\*\*/g, '')
             .replace(/\n+/g, ' ')
             .trim();
-          
+
           setDescription(cleanDescription);
           toast.success('Description generated successfully');
         } else {
@@ -243,6 +243,14 @@ function AdminProductPage() {
                 <label htmlFor="description" className="block text-sm font-medium mb-1 sm:mb-2 text-gray-700">
                   Product Description
                 </label>
+                <button
+                  type="button"
+                  onClick={handleGenerateDescription}
+                  disabled={loading || !name}
+                  className="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 py-1 rounded-md text-sm"
+                >
+                  {loading ? 'Generating...' : 'Generate AI Description'}
+                </button>
                 <div className="relative">
                   <textarea
                     id="description"
@@ -254,14 +262,6 @@ function AdminProductPage() {
                     value={description}
                     disabled={loading}
                   />
-                  <button
-                    type="button"
-                    onClick={handleGenerateDescription}
-                    disabled={loading || !name}
-                    className="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 py-1 rounded-md text-sm"
-                  >
-                    {loading ? 'Generating...' : 'Generate AI Description'}
-                  </button>
                 </div>
               </div>
               <div>
@@ -320,8 +320,8 @@ function AdminProductPage() {
                     value={category}
                     disabled={loading}
                   >                    {categoryList.map(category => (
-                      <option key={category} value={category}>{category.charAt(0).toUpperCase() + category.slice(1)}</option>
-                    ))}
+                    <option key={category} value={category}>{category.charAt(0).toUpperCase() + category.slice(1)}</option>
+                  ))}
                   </select>
                 </div>
                 <div>
@@ -392,17 +392,16 @@ function AdminProductPage() {
             <button
               type="submit"
               disabled={loading}
-              className={`px-4 sm:px-6 w-full py-2 sm:py-3 rounded-lg text-white font-medium transition-all ${
-                loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-              }`}
+              className={`px-4 sm:px-6 w-full py-2 sm:py-3 rounded-lg text-white font-medium transition-all ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                }`}
             >
               {loading
                 ? isEditMode
                   ? 'Updating Product...'
                   : 'Adding Product...'
                 : isEditMode
-                ? 'Update Product'
-                : 'Add Product'}
+                  ? 'Update Product'
+                  : 'Add Product'}
             </button>
           </div>
         </form>
