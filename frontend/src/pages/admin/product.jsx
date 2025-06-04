@@ -175,9 +175,8 @@ function AdminProductPage() {
       setLoading(false);
     }
   };
-
   const getDefaultPrompt = () => {
-    return `Write a compelling and detailed product description for an ${category || ''} product named "${name}"${brand ? ` by ${brand}` : ''}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
+    return `Write a compelling and detailed product description for a {category} product named "{name}"{brand}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
   };
 
   const handleGenerateDescription = () => {
@@ -193,12 +192,16 @@ function AdminProductPage() {
     try {
       setLoading(true);
       setIsPromptModalOpen(false);
-      
+        const processedPrompt = prompt
+        .replace(/{name}/g, name)
+        .replace(/{category}/g, category || '')
+        .replace(/{brand}/g, brand ? ` by ${brand}` : '');
+
       const result = await dispatch(generateAIDescription({
         name,
         category,
         brand,
-        prompt
+        prompt: processedPrompt
       })).unwrap();
 
       if (result?.success) {
