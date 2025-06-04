@@ -8,7 +8,7 @@ export const generateText = async (prompt) => {
         if (!env.TEXT_CORTEX_API_KEY) {
             throw new Error("TEXT_CORTEX_API_KEY is not configured");
         }
-
+        
         const apiKey = env.TEXT_CORTEX_API_KEY.trim();
         const response = await axios.post(API_URL, {
             source_lang: "en",
@@ -32,11 +32,12 @@ export const generateText = async (prompt) => {
 
         console.log('Text Generation Response:', response.data);
 
-        const generatedText = response.data.data[0]?.text;
-        if (!generatedText) {
-            throw new Error("No description generated");
+        const outputs = response.data?.data?.outputs;
+        if (!outputs || outputs.length === 0 || !outputs[0]?.text) {
+            throw new Error(`No text generated from API. Response: ${JSON.stringify(response.data)}`);
         }
-        return generatedText;
+
+        return outputs[0].text;
     } catch (error) {
         console.error('Text Generation Error:', error.response?.data || error.message);
         throw new Error(error.response?.data?.message || "Failed to generate text");
