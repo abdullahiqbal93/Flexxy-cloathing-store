@@ -30,8 +30,6 @@ export const generateText = async (prompt) => {
             }
         });
 
-        console.log('Text Generation Response:', response.data);
-
         const outputs = response.data?.data?.outputs;
         if (!outputs || outputs.length === 0 || !outputs[0]?.text) {
             throw new Error(`No text generated from API. Response: ${JSON.stringify(response.data)}`);

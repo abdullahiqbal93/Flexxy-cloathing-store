@@ -72,7 +72,7 @@ export const loginRateLimiter = rateLimit({
   max: 10, 
   message: "Too many login attempts, please try again after 1 minute.",
   keyGenerator: (req) => {
-    console.log("Rate limiter key:", req.ip);
+    ("Rate limiter key:", req.ip);
     return req.ip;
   },
   standardHeaders: true, 
