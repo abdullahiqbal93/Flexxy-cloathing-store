@@ -177,8 +177,7 @@ function AdminProductPage() {
   };
   const getDefaultPrompt = () => {
     return `Write a compelling and detailed product description for a {category} product named "{name}"{brand}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`;
-  };
-  const handleGenerateDescription = () => {
+  };  const handleGenerateDescription = () => {
     if (!name) {
       toast.error('Please enter a product name first');
       return;
@@ -186,7 +185,6 @@ function AdminProductPage() {
     
     const defaultPrompt = getDefaultPrompt();
     setCustomPrompt(defaultPrompt);
-    setPrompt(defaultPrompt);
     setIsPromptModalOpen(true);
   };
 
