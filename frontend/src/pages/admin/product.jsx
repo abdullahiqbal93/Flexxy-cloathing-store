@@ -186,6 +186,8 @@ function AdminProductPage() {
         category, 
         brand 
       })).unwrap();
+
+      console.log("result:", result)
       
       if (result?.success) {
         const description = result?.description;
