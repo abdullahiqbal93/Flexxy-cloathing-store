@@ -182,41 +182,24 @@ function AdminProductPage() {
       toast.error('Please enter a product name first');
       return;
     }
-    
-    const defaultPrompt = getDefaultPrompt();
-    setCustomPrompt(defaultPrompt);
+    setCustomPrompt(`Write a compelling and detailed product description for an ${category || ''} product named "${name}"${brand ? ` by ${brand}` : ''}. The description should be professional, engaging, and highlight the key features and benefits of the product. Keep it between 100-150 words.`);
     setIsPromptModalOpen(true);
   };
-
   const handleGenerateWithPrompt = async (prompt) => {
     try {
       setLoading(true);
       setIsPromptModalOpen(false);
-        const processedPrompt = prompt
-        .replace(/{name}/g, name)
-        .replace(/{category}/g, category || '')
-        .replace(/{brand}/g, brand ? ` by ${brand}` : '');
-
+      
       const result = await dispatch(generateAIDescription({
         name,
         category,
         brand,
-        prompt: processedPrompt
+        prompt
       })).unwrap();
 
-      if (result?.success) {
-        const description = result?.data?.description;
-        if (description) {
-          const cleanDescription = description
-            .replace(/\*\*/g, '')
-            .replace(/\n+/g, ' ')
-            .trim();
-
-          setDescription(cleanDescription);
-          toast.success('Description generated successfully');
-        } else {
-          throw new Error('No description received from the server');
-        }
+      if (result?.success && result?.data?.description) {
+        setDescription(result.data.description.trim());
+        toast.success('Description generated successfully');
       }
     } catch (error) {
       console.error('AI Description Error:', error);
@@ -423,13 +406,15 @@ function AdminProductPage() {
             </button>
           </div>
         </form>
-      </div>        <PromptModal
-          isOpen={isPromptModalOpen}
-          onClose={() => setIsPromptModalOpen(false)}
-          onSubmit={handleGenerateWithPrompt}
-          defaultPrompt={customPrompt}
-          loading={loading}
-        />
+      </div>
+      <PromptModal
+        isOpen={isPromptModalOpen}
+        onClose={() => setIsPromptModalOpen(false)}
+        onConfirm={handleGenerateWithPrompt}
+        prompt={customPrompt}
+        setPrompt={setCustomPrompt}
+        loading={loading}
+      />
     </div>
   );
 }
