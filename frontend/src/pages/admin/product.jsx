@@ -188,13 +188,18 @@ function AdminProductPage() {
       })).unwrap();
       
       if (result?.success) {
-        const cleanDescription = result.description
-          .replace(/\*\*/g, '')  
-          .replace(/\n+/g, ' ') 
-          .trim();
-        
-        setDescription(cleanDescription);
-        toast.success('Description generated successfully');
+        const description = result?.description;
+        if (description) {
+          const cleanDescription = description
+            .replace(/\*\*/g, '')  
+            .replace(/\n+/g, ' ')
+            .trim();
+          
+          setDescription(cleanDescription);
+          toast.success('Description generated successfully');
+        } else {
+          throw new Error('No description received from the server');
+        }
       }
     } catch (error) {
       console.error('AI Description Error:', error);
