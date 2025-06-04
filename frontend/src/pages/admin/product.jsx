@@ -240,17 +240,19 @@ function AdminProductPage() {
                 />
               </div>
               <div>
-                <label htmlFor="description" className="block text-sm font-medium mb-1 sm:mb-2 text-gray-700">
+                <div className="flex justify-between items-center mb-1 sm:mb-2">
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                   Product Description
                 </label>
                 <button
                   type="button"
                   onClick={handleGenerateDescription}
                   disabled={loading || !name}
-                  className="absolute right-2 top-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 py-1 rounded-md text-sm"
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-3 py-1 rounded-md text-sm"
                 >
                   {loading ? 'Generating...' : 'Generate AI Description'}
                 </button>
+              </div>
                 <div className="relative">
                   <textarea
                     id="description"
