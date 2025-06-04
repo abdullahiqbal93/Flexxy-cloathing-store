@@ -188,7 +188,12 @@ function AdminProductPage() {
       })).unwrap();
       
       if (result?.success) {
-        setDescription(result.description);
+        const cleanDescription = result.description
+          .replace(/\*\*/g, '')  
+          .replace(/\n+/g, ' ') 
+          .trim();
+        
+        setDescription(cleanDescription);
         toast.success('Description generated successfully');
       }
     } catch (error) {
