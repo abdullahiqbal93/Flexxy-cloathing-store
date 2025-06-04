@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { env } from '../../lib/config.js';
 
-const API_URL = "https://api.textcortex.com/v1/texts/descriptions";
+const API_URL = "https://api.textcortex.com/v1/texts/products/descriptions";
 
 export const generateText = async (prompt) => {
     try {
