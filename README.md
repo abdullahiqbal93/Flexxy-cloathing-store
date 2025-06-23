@@ -1,7 +1,7 @@
 # Flexxy - Modern E-commerce Platform
 
 ## Overview
-Flexxy is a full-stack e-commerce platform built with modern web technologies, featuring a robust React frontend and Node.js backend. The platform offers a seamless shopping experience with features like user authentication, product management, Basic order tracking and secure payment processing
+Flexxy is a full-stack e-commerce platform built with modern web technologies, featuring a robust React frontend and Node.js backend. The platform offers a seamless shopping experience with features like user authentication, product management, AI-powered product description generation, and secure payment processing.
 
 ## Tech Stack
 
@@ -21,10 +21,12 @@ Flexxy is a full-stack e-commerce platform built with modern web technologies, f
 - **Express.js** - Web application framework
 - **JWT Authentication** - Secure user authentication
 - **RSA Encryption** - Enhanced security with public/private key pairs
+- **Custom AI** - AI-powered product description generation
 
 ## Key Features
 - 🔐 Secure Authentication and profile management
 - 🛍️ Product Management and Rating System
+- ✨ AI-powered Product Description Generation
 - 🛒 Shopping Cart and Wishlist Functionality
 - 💳 Secure Payment Processing (Paypal)
 - 📦 Basic order management
@@ -58,6 +60,7 @@ Flexxy is a full-stack e-commerce platform built with modern web technologies, f
 ### Prerequisites
 - Node.js (v18 or higher)
 - npm or yarn package manager
+- (Optional) OpenAI API key for enabling AI description generation
 
 ### Frontend Setup
 1. Navigate to the frontend directory:
@@ -97,6 +100,7 @@ Flexxy is a full-stack e-commerce platform built with modern web technologies, f
 - Husky pre-commit hooks
 - Tailwind CSS for styling
 - Component library integration
+- AI Integration for Generating Descriptions
 
 ## Security Features
 - JWT-based authentication
