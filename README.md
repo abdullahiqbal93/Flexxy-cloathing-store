@@ -58,7 +58,7 @@ Flexxy is a full-stack e-commerce platform built with modern web technologies, f
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
+- Node.js (v22 or higher)
 - npm or yarn package manager
 - (Optional) OpenAI API key for enabling AI description generation
 
